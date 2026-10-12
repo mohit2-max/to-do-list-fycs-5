@@ -200,6 +200,25 @@ button { cursor: pointer; border: none; background: none; }
 .tip p { font-size: .92rem; line-height: 1.55; }
 .tip small { display: block; margin-top: 10px; color: var(--muted); }
 
+
+/* ---------- Marks & SGPA ---------- */
+.gpa h2 { font-size: 1.4rem; margin-bottom: 4px; }
+.gpa .sub { color: var(--muted); font-size: .88rem; margin-bottom: 14px; }
+.tbl-wrap { overflow-x: auto; }
+table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.marks th { text-align: left; color: var(--muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+.marks td { padding: 7px 6px; border-bottom: 1px solid var(--border); }
+.marks input { width: 64px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); outline: none; }
+.marks input:focus { border-color: var(--accent); }
+.marks .type { font-size: .7rem; color: var(--muted); }
+.result-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.result { flex: 1; min-width: 140px; background: var(--surface-2); border-radius: 12px; padding: 14px; }
+.result small { color: var(--muted); display: block; font-size: .78rem; }
+.result b { font-family: "Fraunces", serif; font-size: 1.7rem; }
+.fail { color: var(--danger); font-weight: 700; }
+.grade-scales { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+@media (max-width: 720px) { .grade-scales { grid-template-columns: 1fr; } }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) { .app { grid-template-columns: 220px 1fr; } .aside { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
 @media (max-width: 720px) { .app { grid-template-columns: 1fr; padding: 14px; } .sidebar { position: static; height: auto; } }
@@ -225,6 +244,7 @@ button { cursor: pointer; border: none; background: none; }
       <button class="nav-item" data-filter="lab">🧪 Practicals: CS-1, Linux, Web <span class="count" id="c-lab">0</span></button>
       <button class="nav-item" data-filter="aec">📜 Comm · Constitution · Vedic Maths <span class="count" id="c-aec">0</span></button>
       <button class="nav-item" data-filter="personal">☀️ Daily Routine <span class="count" id="c-personal">0</span></button>
+      <button class="nav-item" onclick="document.getElementById('gpaSection').scrollIntoView({behavior:'smooth'})">🎓 Marks, SGPA &amp; CGPA</button>
     </nav>
 
     <div>
@@ -269,6 +289,56 @@ button { cursor: pointer; border: none; background: none; }
     </form>
 
     <ul class="task-list" id="taskList"></ul>
+
+    <!-- ================= MARKS, SGPA & CGPA ================= -->
+    <section class="card gpa" id="gpaSection">
+      <h2>🎓 Sem 1 Marks &amp; SGPA</h2>
+      <p class="sub">Enter the total marks you got in each subject. T = Theory, P = Practical, I = Internal.</p>
+      <div class="tbl-wrap">
+        <table class="marks">
+          <thead><tr><th>Type</th><th>Subject</th><th>Marks split</th><th>Credits</th><th>Your marks</th><th>Grade</th><th>GP</th></tr></thead>
+          <tbody id="marksBody"></tbody>
+        </table>
+      </div>
+      <div class="result-row">
+        <div class="result"><small>Total marks</small><b id="totalMarks">0 / 550</b></div>
+        <div class="result"><small>SGPA (Sem 1)</small><b id="sgpa">—</b></div>
+        <div class="result"><small>Final grade</small><b id="sgpaGrade">—</b></div>
+      </div>
+
+      <h2 style="margin-top:26px">📊 CGPA Calculator</h2>
+      <p class="sub">Add the SGPA and credits of each semester you've finished. Sem 1 fills in automatically.</p>
+      <div class="tbl-wrap">
+        <table class="marks">
+          <thead><tr><th>Semester</th><th>SGPA</th><th>Credits</th></tr></thead>
+          <tbody id="cgpaBody"></tbody>
+        </table>
+      </div>
+      <div class="result-row">
+        <div class="result"><small>CGPA</small><b id="cgpa">—</b></div>
+        <div class="result"><small>Grade</small><b id="cgpaGrade">—</b></div>
+      </div>
+
+      <div class="grade-scales">
+        <div><h3 style="font-size:1rem;margin-bottom:6px">Subject grades (out of 50)</h3>
+          <table class="marks"><tbody>
+            <tr><td>O</td><td>10</td><td>45–50</td></tr><tr><td>A+</td><td>9</td><td>40–44</td></tr>
+            <tr><td>A</td><td>8</td><td>35–39</td></tr><tr><td>B+</td><td>7</td><td>30–34</td></tr>
+            <tr><td>B</td><td>6</td><td>25–29</td></tr><tr><td>C</td><td>5</td><td>21–24</td></tr>
+            <tr><td>P</td><td>4</td><td>20</td></tr><tr><td>F</td><td>0</td><td>Below 20</td></tr>
+          </tbody></table>
+          <p class="sub" style="margin-top:6px">75-mark subjects are scaled to 50 first.</p>
+        </div>
+        <div><h3 style="font-size:1rem;margin-bottom:6px">SGPA / CGPA grades</h3>
+          <table class="marks"><tbody>
+            <tr><td>O</td><td>9.00–10</td></tr><tr><td>A+</td><td>8.00–8.99</td></tr>
+            <tr><td>A</td><td>7.00–7.99</td></tr><tr><td>B+</td><td>6.00–6.99</td></tr>
+            <tr><td>B</td><td>5.50–5.99</td></tr><tr><td>C</td><td>5.00–5.49</td></tr>
+            <tr><td>P</td><td>4.00–4.99</td></tr><tr><td>F</td><td>Below 4.00</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ================= RIGHT: FOCUS & ANALYTICS ================= -->
@@ -490,12 +560,110 @@ function updateCountdown() {
 function showTip() { $("tipText").textContent = TIPS[tipIndex]; }
 $("nextTip").onclick = () => { tipIndex = (tipIndex + 1) % TIPS.length; showTip(); };
 
-// ---------- 12. Start the app ----------
+
+// ---------- 12. Marks, SGPA & CGPA ----------
+// Sem 1 subjects and marks split (from the class sheet)
+const SUBJECTS = [
+  { type: "Major", name: "Computer Fundamentals", split: "30 T + 25 P + 20 I", max: 75, credits: 2 },
+  { type: "Major", name: "Python Programming",     split: "30 T + 25 P + 20 I", max: 75, credits: 2 },
+  { type: "Major", name: "CF + Python Practical",  split: "50 P",               max: 50, credits: 2 },
+  { type: "VSC",   name: "Web Designing",          split: "50 P",               max: 50, credits: 2 },
+  { type: "SEC",   name: "Linux",                  split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "IKS",   name: "Vedic Math",             split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "AEC",   name: "Business Communication", split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "VEC",   name: "EVS",                    split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "OE-1",  name: "Open Elective 1",        split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "OE-2",  name: "Open Elective 2",        split: "30 T + 20 I",        max: 50, credits: 2 }
+];
+let marks = JSON.parse(localStorage.getItem("ss_marks")) || {};
+let semRows = JSON.parse(localStorage.getItem("ss_sems")) || [1,2,3,4,5,6].map(n => ({ sgpa: "", credits: n === 1 ? 20 : "" }));
+
+// Subject grade: marks are first scaled to "out of 50"
+function subjectGrade(score, max) {
+  const m = Math.round(score / max * 50);
+  if (m >= 45) return ["O", 10];
+  if (m >= 40) return ["A+", 9];
+  if (m >= 35) return ["A", 8];
+  if (m >= 30) return ["B+", 7];
+  if (m >= 25) return ["B", 6];
+  if (m >= 21) return ["C", 5];
+  if (m >= 20) return ["P", 4];
+  return ["F", 0];
+}
+// Overall grade from an SGPA / CGPA
+function pointerGrade(g) {
+  if (g >= 9) return "O"; if (g >= 8) return "A+"; if (g >= 7) return "A";
+  if (g >= 6) return "B+"; if (g >= 5.5) return "B"; if (g >= 5) return "C";
+  if (g >= 4) return "P"; return "F";
+}
+
+function buildMarksTable() {
+  $("marksBody").innerHTML = SUBJECTS.map((s, i) => `
+    <tr><td class="type">${s.type}</td><td>${s.name}</td><td class="type">${s.split}</td><td>${s.credits}</td>
+    <td><input type="number" min="0" max="${s.max}" data-i="${i}" value="${marks[i] ?? ""}" placeholder="/${s.max}"></td>
+    <td id="g${i}">—</td><td id="gp${i}">—</td></tr>`).join("");
+  $("marksBody").querySelectorAll("input").forEach(inp => inp.oninput = () => {
+    const i = inp.dataset.i, max = SUBJECTS[i].max;
+    if (inp.value === "") delete marks[i];
+    else marks[i] = Math.min(max, Math.max(0, Number(inp.value)));
+    localStorage.setItem("ss_marks", JSON.stringify(marks));
+    calcSGPA();
+  });
+
+  $("cgpaBody").innerHTML = semRows.map((r, i) => `
+    <tr><td>Semester ${i + 1}</td>
+    <td><input type="number" step="0.01" min="0" max="10" data-k="sgpa" data-i="${i}" value="${r.sgpa}" ${i === 0 ? "readonly" : ""}></td>
+    <td><input type="number" min="0" data-k="credits" data-i="${i}" value="${r.credits}"></td></tr>`).join("");
+  $("cgpaBody").querySelectorAll("input").forEach(inp => inp.oninput = () => {
+    semRows[inp.dataset.i][inp.dataset.k] = inp.value;
+    localStorage.setItem("ss_sems", JSON.stringify(semRows));
+    calcCGPA();
+  });
+}
+
+// SGPA = sum(credits × grade point) ÷ sum(credits)
+function calcSGPA() {
+  let total = 0, cp = 0, cr = 0, filled = 0, failed = false;
+  SUBJECTS.forEach((s, i) => {
+    if (marks[i] === undefined) { $("g"+i).textContent = "—"; $("gp"+i).textContent = "—"; return; }
+    const [g, gp] = subjectGrade(marks[i], s.max);
+    $("g"+i).innerHTML = g === "F" ? '<span class="fail">F</span>' : g;
+    $("gp"+i).textContent = gp;
+    total += marks[i]; cp += s.credits * gp; cr += s.credits; filled++;
+    if (gp === 0) failed = true;
+  });
+  $("totalMarks").textContent = `${total} / 550`;
+  if (!filled) { $("sgpa").textContent = "—"; $("sgpaGrade").textContent = "—"; semRows[0].sgpa = ""; }
+  else {
+    const sgpa = cp / cr;
+    $("sgpa").textContent = sgpa.toFixed(2) + (filled < SUBJECTS.length ? "*" : "");
+    $("sgpaGrade").innerHTML = failed ? '<span class="fail">ATKT</span>' : pointerGrade(sgpa);
+    semRows[0].sgpa = sgpa.toFixed(2);
+  }
+  const first = $("cgpaBody").querySelector('input[data-i="0"][data-k="sgpa"]');
+  if (first) first.value = semRows[0].sgpa;
+  localStorage.setItem("ss_sems", JSON.stringify(semRows));
+  calcCGPA();
+}
+
+// CGPA = sum(SGPA × semester credits) ÷ sum(semester credits)
+function calcCGPA() {
+  let pts = 0, cr = 0;
+  semRows.forEach(r => { const g = parseFloat(r.sgpa), c = parseFloat(r.credits); if (g >= 0 && c > 0) { pts += g * c; cr += c; } });
+  if (!cr) { $("cgpa").textContent = "—"; $("cgpaGrade").textContent = "—"; return; }
+  const cgpa = pts / cr;
+  $("cgpa").textContent = cgpa.toFixed(2);
+  $("cgpaGrade").textContent = pointerGrade(cgpa);
+}
+
+// ---------- 13. Start the app ----------
 applyTheme(localStorage.getItem("ss_theme") || "light");
 updateCountdown();
 showTip();
 drawTimer();
 setFilter(currentFilter);
+buildMarksTable();
+calcSGPA();
 </script>
 </body>
 </html>
