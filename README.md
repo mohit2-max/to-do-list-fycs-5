@@ -1,24 +1,15 @@
-# Pixel Perfect Replica
+# Student Productivity & To-Do Workspace
 
-Implement exactly the screenshot and nothing else
+A clean, minimalist To-Do List and Study Task Tracker created using pure HTML5, CSS3, and Vanilla JavaScript.
 
-This project was built with [Lovable](https://lovable.dev).
+## Features
+- Task management with category filters (Academic, Practicals, Routine)
+- LocalStorage integration to save tasks and state
+- Interactive Pomodoro focus timer
+- Dark / Light Mode theme toggle
+- Responsive layout built with vanilla CSS
 
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/7953621e-14ac-458a-aa4a-211176ca2d02).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+## Tech Stack
+- HTML5 (Semantic Structure)
+- CSS3 (Flexbox, Grid & CSS Variables)
+- Vanilla JavaScript (DOM Manipulation & LocalStorage)
