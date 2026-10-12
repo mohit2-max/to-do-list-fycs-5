@@ -219,6 +219,19 @@ table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
 .grade-scales { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
 @media (max-width: 720px) { .grade-scales { grid-template-columns: 1fr; } }
 
+
+/* ---------- Timetable ---------- */
+table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layout: fixed; min-width: 560px; }
+.tt th, .tt td { border: 1px solid var(--border); padding: 7px 5px; text-align: center; vertical-align: middle; }
+.tt th { background: var(--surface-2); font-weight: 700; }
+.tt td.time { color: var(--muted); font-size: .74rem; white-space: nowrap; }
+.tt td.cls { border-radius: 0; }
+.tt .today { background: var(--accent-soft); }
+.tt .now { outline: 2px solid var(--accent); outline-offset: -2px; font-weight: 700; }
+.tt small { display: block; color: var(--muted); font-size: .68rem; }
+.next-class b { font-family: "Fraunces", serif; font-size: 1.15rem; display: block; margin: 4px 0; }
+.next-class small { color: var(--muted); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) { .app { grid-template-columns: 220px 1fr; } .aside { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
 @media (max-width: 720px) { .app { grid-template-columns: 1fr; padding: 14px; } .sidebar { position: static; height: auto; } }
@@ -244,6 +257,7 @@ table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
       <button class="nav-item" data-filter="lab">🧪 Practicals: CS-1, Linux, Web <span class="count" id="c-lab">0</span></button>
       <button class="nav-item" data-filter="aec">📜 Comm · Constitution · Vedic Maths <span class="count" id="c-aec">0</span></button>
       <button class="nav-item" data-filter="personal">☀️ Daily Routine <span class="count" id="c-personal">0</span></button>
+      <button class="nav-item" onclick="document.getElementById('ttSection').scrollIntoView({behavior:'smooth'})">🗓️ Timetable</button>
       <button class="nav-item" onclick="document.getElementById('gpaSection').scrollIntoView({behavior:'smooth'})">🎓 Marks, SGPA &amp; CGPA</button>
     </nav>
 
@@ -289,6 +303,13 @@ table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
     </form>
 
     <ul class="task-list" id="taskList"></ul>
+
+    <!-- ================= TIMETABLE ================= -->
+    <section class="card gpa" id="ttSection">
+      <h2>🗓️ Sem 1 Timetable</h2>
+      <p class="sub">FYCS · Room 403 · Today's column is highlighted, and the current class is outlined.</p>
+      <div class="tbl-wrap"><table class="tt" id="ttTable"></table></div>
+    </section>
 
     <!-- ================= MARKS, SGPA & CGPA ================= -->
     <section class="card gpa" id="gpaSection">
@@ -343,6 +364,12 @@ table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
 
   <!-- ================= RIGHT: FOCUS & ANALYTICS ================= -->
   <aside class="aside">
+    <div class="card next-class">
+      <h3>🔔 Class Now / Next</h3>
+      <small id="nowLabel">Now</small><b id="nowClass">—</b>
+      <small id="nextLabel">Next</small><b id="nextClass">—</b>
+    </div>
+
     <div class="card">
       <h3>⏱️ Study Sprint</h3>
       <div class="timer" id="timer">25:00</div>
@@ -656,7 +683,64 @@ function calcCGPA() {
   $("cgpaGrade").textContent = pointerGrade(cgpa);
 }
 
-// ---------- 13. Start the app ----------
+
+// ---------- 13. Timetable ----------
+// Short codes → subject names
+const SUBJ = {
+  "CF": "Computer Fundamentals", "CF (P)": "CF Practical", "PYTHON": "Python", "PYTHON (P)": "Python Practical",
+  "VEC": "EVS", "IKS": "Vedic Math", "AEC": "Business Comm", "SEC": "Linux", "VSC": "Web Designing",
+  "OE A": "Open Elective A", "OE B": "Open Elective B", "STUD_CONN (CS DEPT)": "Student Connect"
+};
+const SLOTS = [
+  ["10:00", "11:00"], ["11:00", "12:00"], ["12:00", "13:00"], ["13:30", "14:30"],
+  ["14:45", "15:45"], ["15:45", "16:45"], ["16:45", "17:45"]
+];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// One row per time slot, one entry per day (Mon → Sat). "" = free.
+const TIMETABLE = [
+  ["", "", "", "", "", "SHC+PRD-STUD_CONN (CS DEPT)"],
+  ["LCT-CF", "", "", "", "", "LCT-CF"],
+  ["PRD-PYTHON", "SFC-OE A", "SFC-OE B", "SFC-OE A", "SFC-OE B", ""],
+  ["DPG-VEC", "SHC-IKS", "ASH-AEC", "DPG-VEC", "PRD-PYTHON", "PRD+SHC-PYTHON (P)"],
+  ["LCT-CF (P)", "RJD-SEC", "RJD+LCT-VSC", "ASH-AEC", "RJD+LCT-VSC", "PRD+SHC-PYTHON (P)"],
+  ["LCT-CF (P)", "RJD-SEC", "RJD+LCT-VSC", "RJD-SEC", "RJD+LCT-VSC", "SHC-IKS"],
+  ["", "", "", "RJD-SEC", "", ""]
+];
+const fmt = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "pm" : "am"; h = h % 12 || 12; return `${h}:${String(m).padStart(2,"0")} ${ap}`; };
+const toMin = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+function splitCell(c) { const i = c.indexOf("-"); return { teacher: c.slice(0, i), code: c.slice(i + 1) }; }
+
+function renderTimetable() {
+  const now = new Date(), dayIdx = now.getDay() - 1, mins = now.getHours() * 60 + now.getMinutes();
+  let html = "<tr><th>Time</th>" + DAYS.map((d, i) => `<th class="${i === dayIdx ? "today" : ""}">${d}</th>`).join("") + "</tr>";
+  SLOTS.forEach(([a, b], r) => {
+    const live = mins >= toMin(a) && mins < toMin(b);
+    html += `<tr><td class="time">${fmt(a)}<br>${fmt(b)}</td>`;
+    TIMETABLE[r].forEach((c, d) => {
+      let cls = d === dayIdx ? "today" : "";
+      if (d === dayIdx && live && c) cls += " now";
+      if (!c) { html += `<td class="${cls}"></td>`; return; }
+      const { teacher, code } = splitCell(c);
+      html += `<td class="${cls}">${SUBJ[code] || code}<small>${teacher}</small></td>`;
+    });
+    html += "</tr>";
+  });
+  $("ttTable").innerHTML = html;
+
+  // Now / Next widget
+  let nowTxt = "No class right now", nextTxt = "No more classes today 🎉", nextLbl = "Next";
+  if (dayIdx >= 0 && dayIdx < 6) {
+    SLOTS.forEach(([a, b], r) => {
+      const c = TIMETABLE[r][dayIdx]; if (!c) return;
+      const name = SUBJ[splitCell(c).code];
+      if (mins >= toMin(a) && mins < toMin(b)) nowTxt = `${name} · till ${fmt(b)}`;
+      else if (toMin(a) > mins && nextLbl === "Next") { nextTxt = name; nextLbl = `Next at ${fmt(a)}`; }
+    });
+  } else { nowTxt = "Sunday — rest day ☀️"; nextTxt = "Mon 11:00 am · Computer Fundamentals"; }
+  $("nowClass").textContent = nowTxt; $("nextClass").textContent = nextTxt; $("nextLabel").textContent = nextLbl;
+}
+
+// ---------- 14. Start the app ----------
 applyTheme(localStorage.getItem("ss_theme") || "light");
 updateCountdown();
 showTip();
@@ -664,6 +748,8 @@ drawTimer();
 setFilter(currentFilter);
 buildMarksTable();
 calcSGPA();
+renderTimetable();
+setInterval(renderTimetable, 60000);
 </script>
 </body>
 </html>
