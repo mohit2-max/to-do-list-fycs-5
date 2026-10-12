@@ -222,6 +222,9 @@ table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
 
 /* ---------- Timetable ---------- */
 table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layout: fixed; min-width: 560px; }
+.ex-done { opacity: .5; text-decoration: line-through; }
+.ex-today td { background: var(--accent-soft); font-weight: 700; }
+.ex-next td { background: var(--butter-soft); }
 .tt th, .tt td { border: 1px solid var(--border); padding: 7px 5px; text-align: center; vertical-align: middle; }
 .tt th { background: var(--surface-2); font-weight: 700; }
 .tt td.time { color: var(--muted); font-size: .74rem; white-space: nowrap; }
@@ -257,8 +260,10 @@ table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layou
       <button class="nav-item" data-filter="lab">🧪 Practicals: CS-1, Linux, Web <span class="count" id="c-lab">0</span></button>
       <button class="nav-item" data-filter="aec">📜 Comm · Constitution · Vedic Maths <span class="count" id="c-aec">0</span></button>
       <button class="nav-item" data-filter="personal">☀️ Daily Routine <span class="count" id="c-personal">0</span></button>
-      <button class="nav-item" onclick="document.getElementById('ttSection').scrollIntoView({behavior:'smooth'})">🗓️ Timetable</button>
-      <button class="nav-item" onclick="document.getElementById('gpaSection').scrollIntoView({behavior:'smooth'})">🎓 Marks, SGPA &amp; CGPA</button>
+      <div class="section-label" style="margin-top:12px">Tools</div>
+      <button class="nav-item" data-view="examSection">📝 Term 1 Exam Timetable</button>
+      <button class="nav-item" data-view="ttSection">🗓️ Class Timetable</button>
+      <button class="nav-item" data-view="gpaSection">🎓 Expected SGPA &amp; CGPA</button>
     </nav>
 
     <div>
@@ -275,12 +280,13 @@ table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layou
   <main class="main">
     <div class="banner">
       <div>
-        <strong>🎓 Sem 1 Exams are coming</strong>
-        <p>Stay consistent — small sessions every day add up.</p>
+        <strong id="bannerTitle">🎓 Term 1 Exams are coming</strong>
+        <p id="bannerText">Stay consistent — small sessions every day add up.</p>
       </div>
       <span class="chip" id="countdown">-- days left</span>
     </div>
 
+    <div id="tasksView">
     <div class="header">
       <h1 id="title">All Tasks</h1>
       <p id="counter">0 of 0 tasks completed</p>
@@ -303,27 +309,36 @@ table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layou
     </form>
 
     <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- ================= EXAM TIMETABLE ================= -->
+    <section class="card gpa view" id="examSection" hidden>
+      <h2>📝 Term 1 · Sem 1 Exam Timetable</h2>
+      <p class="sub">FYBSc (CS) · Regular &amp; ATKT · Exam timing 2:00 pm – 3:15 pm</p>
+      <div class="tbl-wrap"><table class="marks" id="examTable"></table></div>
+      <button class="btn ghost" id="notifyBtn" style="margin-top:14px">🔔 Turn on daily exam reminders</button>
+    </section>
 
     <!-- ================= TIMETABLE ================= -->
-    <section class="card gpa" id="ttSection">
+    <section class="card gpa view" id="ttSection" hidden>
       <h2>🗓️ Sem 1 Timetable</h2>
       <p class="sub">FYCS · Room 403 · Today's column is highlighted, and the current class is outlined.</p>
       <div class="tbl-wrap"><table class="tt" id="ttTable"></table></div>
     </section>
 
     <!-- ================= MARKS, SGPA & CGPA ================= -->
-    <section class="card gpa" id="gpaSection">
-      <h2>🎓 Sem 1 Marks &amp; SGPA</h2>
-      <p class="sub">Enter the total marks you got in each subject. T = Theory, P = Practical, I = Internal.</p>
+    <section class="card gpa view" id="gpaSection" hidden>
+      <h2>🎓 Expected SGPA &amp; CGPA</h2>
+      <p class="sub">Enter the marks you <b>expect</b> to score in each subject to predict your SGPA. T = Theory, P = Practical, I = Internal.</p>
       <div class="tbl-wrap">
         <table class="marks">
-          <thead><tr><th>Type</th><th>Subject</th><th>Marks split</th><th>Credits</th><th>Your marks</th><th>Grade</th><th>GP</th></tr></thead>
+          <thead><tr><th>Type</th><th>Subject</th><th>Marks split</th><th>Credits</th><th>Expected marks</th><th>Grade</th><th>GP</th></tr></thead>
           <tbody id="marksBody"></tbody>
         </table>
       </div>
       <div class="result-row">
         <div class="result"><small>Total marks</small><b id="totalMarks">0 / 550</b></div>
-        <div class="result"><small>SGPA (Sem 1)</small><b id="sgpa">—</b></div>
+        <div class="result"><small>Expected SGPA (Sem 1)</small><b id="sgpa">—</b></div>
         <div class="result"><small>Final grade</small><b id="sgpaGrade">—</b></div>
       </div>
 
@@ -404,7 +419,6 @@ table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layou
    =========================================================== */
 
 // ---------- 1. Settings ----------
-const EXAM_DATE = new Date("2026-11-20");   // change to your real exam date
 const POMODORO_SECONDS = 25 * 60;
 
 const CATEGORY_NAMES = {
@@ -580,10 +594,6 @@ function applyTheme(theme) {
 $("themeToggle").onclick = () => applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
 
 // ---------- 11. Exam countdown + tips ----------
-function updateCountdown() {
-  const days = Math.ceil((EXAM_DATE - new Date()) / 86400000);
-  $("countdown").textContent = days > 0 ? `⏳ ${days} days left` : "Exam day! 🍀";
-}
 function showTip() { $("tipText").textContent = TIPS[tipIndex]; }
 $("nextTip").onclick = () => { tipIndex = (tipIndex + 1) % TIPS.length; showTip(); };
 
@@ -740,9 +750,82 @@ function renderTimetable() {
   $("nowClass").textContent = nowTxt; $("nextClass").textContent = nextTxt; $("nextLabel").textContent = nextLbl;
 }
 
-// ---------- 14. Start the app ----------
+
+// ---------- 15. Term 1 exam timetable + daily reminders ----------
+const EXAMS = [
+  { date: "2026-10-19", subject: "Business Communication Skills I" },
+  { date: "2026-10-21", subject: "Computer Fundamentals" },
+  { date: "2026-10-22", subject: "Environmental Management & Sustainable Development I" },
+  { date: "2026-10-23", subject: "Programming using Python" },
+  { date: "2026-10-24", subject: "Vedic Mathematics" },
+  { date: "2026-10-29", subject: "Open Elective (Group A)" },
+  { date: "2026-10-31", subject: "Open Elective (Group B)" }
+];
+const EXAM_END = 15 * 60 + 15; // exams finish at 3:15 pm
+const dayStart = d => { const x = new Date(d); x.setHours(0,0,0,0); return x; };
+const prettyDate = d => new Date(d + "T00:00").toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" });
+
+// The next exam that hasn't finished yet
+function nextExam() {
+  const now = new Date(), mins = now.getHours() * 60 + now.getMinutes(), today = dayStart(now);
+  return EXAMS.find(e => { const d = dayStart(e.date + "T00:00"); return d > today || (+d === +today && mins < EXAM_END); });
+}
+function daysUntil(dateStr) { return Math.round((dayStart(dateStr + "T00:00") - dayStart(new Date())) / 86400000); }
+
+function reminderText() {
+  const e = nextExam();
+  if (!e) return { title: "🎉 Term 1 exams are over!", text: "Great job — time to rest and recharge.", chip: "All done" };
+  const n = daysUntil(e.date);
+  const remaining = EXAMS.length - EXAMS.indexOf(e);
+  const when = n === 0 ? "TODAY at 2:00 pm" : n === 1 ? "TOMORROW at 2:00 pm" : `on ${prettyDate(e.date)}`;
+  return {
+    title: `📝 Next exam: ${e.subject}`,
+    text: `${when} · ${remaining} exam${remaining > 1 ? "s" : ""} left in Term 1`,
+    chip: n === 0 ? "Today! 🍀" : `⏳ ${n} day${n > 1 ? "s" : ""} left`
+  };
+}
+
+function renderExams() {
+  const r = reminderText();
+  $("bannerTitle").textContent = r.title; $("bannerText").textContent = r.text; $("countdown").textContent = r.chip;
+  const next = nextExam();
+  $("examTable").innerHTML = "<thead><tr><th>Date</th><th>Subject</th><th>Status</th></tr></thead><tbody>" +
+    EXAMS.map(e => {
+      const n = daysUntil(e.date), isNext = e === next;
+      const done = !isNext && n <= 0;
+      const status = done ? "✅ Done" : n === 0 ? "Today" : `In ${n} day${n > 1 ? "s" : ""}`;
+      return `<tr class="${done ? "ex-done" : n === 0 ? "ex-today" : isNext ? "ex-next" : ""}"><td>${prettyDate(e.date)}</td><td>${e.subject}</td><td>${status}</td></tr>`;
+    }).join("") + "</tbody>";
+}
+
+// Show a browser notification once per day (if allowed)
+function dailyReminder() {
+  const key = new Date().toDateString();
+  if (localStorage.getItem("ss_reminded") === key) return;
+  const r = reminderText();
+  if ("Notification" in window && Notification.permission === "granted") {
+    new Notification(r.title, { body: r.text });
+    localStorage.setItem("ss_reminded", key);
+  }
+}
+$("notifyBtn").onclick = async () => {
+  if (!("Notification" in window)) return alert("Your browser doesn't support notifications.");
+  const p = await Notification.requestPermission();
+  if (p === "granted") { localStorage.removeItem("ss_reminded"); dailyReminder(); $("notifyBtn").textContent = "✅ Daily reminders on"; }
+};
+if ("Notification" in window && Notification.permission === "granted") $("notifyBtn").textContent = "✅ Daily reminders on";
+
+// ---------- 16. Switching between Tasks and Tools ----------
+function showView(id) {
+  $("tasksView").hidden = !!id;
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== id);
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", id ? b.dataset.view === id : b.dataset.filter === currentFilter));
+}
+document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => showView(b.dataset.view));
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => showView(null)));
+
+// ---------- 17. Start the app ----------
 applyTheme(localStorage.getItem("ss_theme") || "light");
-updateCountdown();
 showTip();
 drawTimer();
 setFilter(currentFilter);
@@ -750,6 +833,9 @@ buildMarksTable();
 calcSGPA();
 renderTimetable();
 setInterval(renderTimetable, 60000);
+renderExams();
+dailyReminder();
+setInterval(() => { renderExams(); dailyReminder(); }, 60000);
 </script>
 </body>
 </html>
