@@ -175,6 +175,10 @@ button { cursor: pointer; border: none; background: none; }
 .p2 { background: var(--sky-soft); color: var(--sky); }
 .cat-academic { background: var(--lilac-soft); color: var(--lilac); }
 .cat-practicals { background: var(--sage-soft); color: var(--sage); }
+.cat-cf { background: var(--accent-soft); color: var(--accent); }
+.cat-python { background: var(--sky-soft); color: var(--sky); }
+.cat-lab { background: var(--sage-soft); color: var(--sage); }
+.cat-aec { background: var(--lilac-soft); color: var(--lilac); }
 .cat-personal { background: var(--butter-soft); color: #b8912f; }
 .trash { color: var(--muted); padding: 4px; border-radius: 8px; opacity: .6; transition: all .2s; }
 .trash:hover { color: var(--danger); opacity: 1; background: var(--surface-2); }
@@ -216,8 +220,10 @@ button { cursor: pointer; border: none; background: none; }
     <nav>
       <div class="section-label">Workspace</div>
       <button class="nav-item active" data-filter="all">📋 All Tasks <span class="count" id="c-all">0</span></button>
-      <button class="nav-item" data-filter="academic">📖 Academic &amp; Theory <span class="count" id="c-academic">0</span></button>
-      <button class="nav-item" data-filter="practicals">🐍 Python &amp; Linux Lab <span class="count" id="c-practicals">0</span></button>
+      <button class="nav-item" data-filter="cf">🖥️ Computer Fundamentals <span class="count" id="c-cf">0</span></button>
+      <button class="nav-item" data-filter="python">🐍 Python Programming <span class="count" id="c-python">0</span></button>
+      <button class="nav-item" data-filter="lab">🧪 Practicals: CS-1, Linux, Web <span class="count" id="c-lab">0</span></button>
+      <button class="nav-item" data-filter="aec">📜 Comm · Constitution · Vedic Maths <span class="count" id="c-aec">0</span></button>
       <button class="nav-item" data-filter="personal">☀️ Daily Routine <span class="count" id="c-personal">0</span></button>
     </nav>
 
@@ -225,7 +231,7 @@ button { cursor: pointer; border: none; background: none; }
       <div class="section-label">Projects</div>
       <div class="tag-row"><span class="dot" style="background:var(--accent)"></span>#Sem1_Revision</div>
       <div class="tag-row"><span class="dot" style="background:var(--sage)"></span>#Viva_Prep</div>
-      <div class="tag-row"><span class="dot" style="background:var(--sky)"></span>#Web_Project</div>
+      <div class="tag-row"><span class="dot" style="background:var(--sky)"></span>#Web_Designing</div>
     </div>
 
     <button class="theme-toggle" id="themeToggle">🌙 Dark mode</button>
@@ -249,8 +255,10 @@ button { cursor: pointer; border: none; background: none; }
     <form class="add-bar card" id="addForm">
       <input type="text" id="taskInput" placeholder="What do you need to study?" autocomplete="off" />
       <select id="catSelect">
-        <option value="academic">#Academic</option>
-        <option value="practicals">#Practicals</option>
+        <option value="cf">#CompFundamentals</option>
+        <option value="python">#Python</option>
+        <option value="lab">#Practicals</option>
+        <option value="aec">#AEC_VEC_IKS</option>
         <option value="personal">#Personal</option>
       </select>
       <select id="prioSelect">
@@ -304,36 +312,44 @@ const POMODORO_SECONDS = 25 * 60;
 
 const CATEGORY_NAMES = {
   all: "All Tasks",
-  academic: "Academic & Theory",
-  practicals: "Python & Linux Lab",
+  cf: "Computer Fundamentals",
+  python: "Programming using Python",
+  lab: "Practicals — CS Practical 1, Linux OS, Web Designing",
+  aec: "Business Comm 1 · Indian Constitution · Vedic Maths",
   personal: "Daily Routine"
 };
-const CATEGORY_LABELS = { academic: "#Academic", practicals: "#Practicals", personal: "#Personal" };
+const CATEGORY_LABELS = { cf: "#CompFundamentals", python: "#Python", lab: "#Practicals", aec: "#AEC_VEC_IKS", personal: "#Personal" };
 
 const TIPS = [
-  "Explain your code line by line — examiners love clarity over speed.",
-  "If you don't know an answer, say how you'd find it. Honesty scores points.",
-  "Revise the difference between a list and a tuple in Python — it's a classic.",
-  "Know your basic Linux commands: ls, cd, chmod, grep, ps.",
-  "Small steps every day beat one giant cram session.",
-  "Draw a diagram when explaining a concept — it shows understanding."
+  "CF Viva: be ready to explain Von Neumann architecture with a neat diagram.",
+  "Know the difference between Computer Organization and Computer Architecture.",
+  "Draw Gantt charts for scheduling numericals — show waiting & turnaround time.",
+  "Flip-flops (SR, JK, D): remember the truth tables and the JK race-around issue.",
+  "Python Viva: list vs tuple, mutable vs immutable — a classic question.",
+  "Linux practical: chmod, grep, ps, ls -l and pipes are asked often.",
+  "Web Designing: explain your HTML structure and CSS box model clearly.",
+  "Small steps every day beat one giant cram session."
 ];
 
 // ---------- 2. Load saved data (or defaults) ----------
-let tasks = JSON.parse(localStorage.getItem("ss_tasks")) || [
-  { id: 1, text: "Revise Number Systems & Boolean Algebra", cat: "academic", prio: "p1", done: true },
-  { id: 2, text: "Practice Python loops & functions", cat: "practicals", prio: "p1", done: false },
-  { id: 3, text: "Linux lab: file permissions exercise", cat: "practicals", prio: "p2", done: true },
-  { id: 4, text: "Prepare Viva answers for Unit 2", cat: "academic", prio: "p2", done: false },
-  { id: 5, text: "Morning walk + 8 glasses of water", cat: "personal", prio: "p2", done: true }
+let tasks = JSON.parse(localStorage.getItem("ss_tasks_v2")) || [
+  { id: 1, text: "CF Unit I: Number systems, Boolean algebra & K-Maps", cat: "cf", prio: "p1", done: true },
+  { id: 2, text: "CF Unit II: Addressing modes, RISC vs CISC, cache mapping", cat: "cf", prio: "p1", done: false },
+  { id: 3, text: "CF Unit III: CPU scheduling — FCFS, SJF, SRTF, RR numericals", cat: "cf", prio: "p1", done: false },
+  { id: 4, text: "Python: lists, tuples, dictionaries & functions", cat: "python", prio: "p1", done: false },
+  { id: 5, text: "Linux OS practical: file permissions & shell commands", cat: "lab", prio: "p2", done: true },
+  { id: 6, text: "Web Designing practical: HTML forms + CSS layout", cat: "lab", prio: "p2", done: false },
+  { id: 7, text: "Indian Constitution: Preamble & Fundamental Rights", cat: "aec", prio: "p2", done: false },
+  { id: 8, text: "Vedic Maths: practice multiplication sutras", cat: "aec", prio: "p2", done: false },
+  { id: 9, text: "Morning walk + 8 glasses of water", cat: "personal", prio: "p2", done: true }
 ];
-let currentFilter = localStorage.getItem("ss_filter") || "all";
+let currentFilter = (CATEGORY_NAMES[localStorage.getItem("ss_filter")] ? localStorage.getItem("ss_filter") : "all");
 let timeLeft = Number(localStorage.getItem("ss_timer")) || POMODORO_SECONDS;
 let tipIndex = 0;
 let timerId = null;
 
 function save() {
-  localStorage.setItem("ss_tasks", JSON.stringify(tasks));
+  localStorage.setItem("ss_tasks_v2", JSON.stringify(tasks));
   localStorage.setItem("ss_filter", currentFilter);
 }
 
@@ -404,7 +420,7 @@ function updateStats() {
 
   // sidebar counts
   $("c-all").textContent = tasks.length;
-  ["academic", "practicals", "personal"].forEach(c => $("c-" + c).textContent = tasks.filter(t => t.cat === c).length);
+  ["cf", "python", "lab", "aec", "personal"].forEach(c => $("c-" + c).textContent = tasks.filter(t => t.cat === c).length);
 }
 
 // ---------- 7. Add-task form ----------
