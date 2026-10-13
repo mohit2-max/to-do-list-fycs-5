@@ -11,6 +11,38 @@
 /* ===========================================================
    1. THEME TOKENS (CSS variables) — light & dark
    =========================================================== */
+
+   /* Mobile screen pe task row ko theek karne ke liye */
+.task-item, .task-card, [class*="task"] {
+  flex-wrap: wrap !important;
+}
+
+/* Text ko poori jagah do taaki ek line me aaye */
+.task-item span, .task-card span, p {
+  min-width: 0 !important;
+  word-break: normal !important;
+  white-space: normal !important;
+}
+
+/* Badges aur priority tags ke liye */
+.task-item > div, .task-card > div {
+  flex-shrink: 0;
+}/* Mobile screen pe task row ko theek karne ke liye */
+.task-item, .task-card, [class*="task"] {
+  flex-wrap: wrap !important;
+}
+
+/* Text ko poori jagah do taaki ek line me aaye */
+.task-item span, .task-card span, p {
+  min-width: 0 !important;
+  word-break: normal !important;
+  white-space: normal !important;
+}
+
+/* Badges aur priority tags ke liye */
+.task-item > div, .task-card > div {
+  flex-shrink: 0;
+}
 :root {
   --bg: #faf6f0;
   --surface: #ffffff;
