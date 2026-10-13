@@ -1,17 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>To-Do List — Student Productivity Workspace</title>
-<meta name="description" content="StudySync: a calm, minimalist to-do and focus workspace for students." />
+<meta name="description" content="StudySync: a calm, minimalist to-do 
+and focus workspace for students." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
 /* ===========================================================
    1. THEME TOKENS (CSS variables) — light & dark
    =========================================================== */
-:root {
+
+
+:root 
+{
   --bg: #faf6f0;
   --surface: #ffffff;
   --surface-2: #f4eee5;
@@ -21,7 +26,8 @@
   --accent: #e07a5f;        /* warm terracotta */
   --accent-soft: #fbe3da;
   --sage: #9cb59a;   --sage-soft: #e5efe3;
-  --sky: #8fb3d9;    --sky-soft: #e2ecf7;
+  --sky: #8fb3d9;    --sky-soft: 
+#e2ecf7;
   --butter: #e9c46a; --butter-soft: #faf0d4;
   --lilac: #b8a1d6;  --lilac-soft: #eee6f7;
   --danger: #d9534f;
@@ -29,7 +35,8 @@
   --radius: 14px;
 }
 body.dark {
-  --bg: #1b1917;
+  --bg: 
+#1b1917;
   --surface: #242120;
   --surface-2: #2d2927;
   --text: #f1ebe4;
@@ -40,13 +47,15 @@ body.dark {
   --sky-soft: #26323f;
   --butter-soft: #3d3522;
   --lilac-soft: #352d40;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px 
+rgba(0,0,0,.5);
 }
 
 /* ===========================================================
    2. BASE
    =========================================================== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; 
+}
 body {
   font-family: "Nunito Sans", system-ui, sans-serif;
   background: var(--bg);
@@ -54,13 +63,15 @@ body {
   transition: background .3s, color .3s;
   min-height: 100vh;
 }
-h1, h2, h3, .serif { font-family: "Fraunces", Georgia, serif; font-weight: 600; }
+h1, h2, h3, .serif { font-family: "Fraunces", Georgia, serif; 
+font-weight: 600; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; border: none; background: none; }
 
 /* ===========================================================
    3. LAYOUT — 3 columns
-   =========================================================== */
+   
+=========================================================== */
 .app {
   display: grid;
   grid-template-columns: 250px 1fr 300px;
@@ -70,7 +81,8 @@ button { cursor: pointer; border: none; background: none; }
   padding: 24px;
   min-height: 100vh;
 }
-.card {
+.card 
+{
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -79,27 +91,32 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 /* ---------- Sidebar ---------- */
-.sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 24px; height: calc(100vh - 48px); }
+.sidebar { display: flex; 
+flex-direction: column; gap: 20px; position: sticky; top: 24px; height: calc(100vh - 48px); }
 .brand { font-family: "Fraunces", serif; font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
 .brand span { color: var(--accent); }
 .profile { display: flex; gap: 12px; align-items: center; }
 .avatar {
-  width: 42px; height: 42px; border-radius: 50%;
+  width: 42px; height: 
+42px; border-radius: 50%;
   background: var(--accent-soft); color: var(--accent);
   display: grid; place-items: center; font-weight: 700;
 }
 .profile small { color: var(--muted); display: block; font-size: .78rem; }
-.section-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; padding-left: 10px; }
+.section-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; 
+padding-left: 10px; }
 .nav-item {
   width: 100%; text-align: left; padding: 9px 10px; border-radius: 10px;
   display: flex; justify-content: space-between; align-items: center;
   font-size: .92rem; transition: background .2s;
 }
-.nav-item:hover { background: var(--surface-2); }
+.nav-item:hover { background: var(--surface-2); 
+}
 .nav-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
 .nav-item .count { font-size: .75rem; color: var(--muted); }
 .tag-row { display: flex; align-items: center; gap: 10px; padding: 7px 10px; font-size: .9rem; color: var(--muted); }
-.dot { width: 9px; height: 9px; border-radius: 50%; }
+.dot { width: 9px; height: 
+9px; border-radius: 50%; }
 .theme-toggle {
   margin-top: auto; padding: 10px; border-radius: 10px;
   border: 1px solid var(--border); background: var(--surface);
@@ -111,362 +128,1549 @@ button { cursor: pointer; border: none; background: none; }
 /* ---------- Main ---------- */
 .main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 .banner {
-  background: linear-gradient(120deg, var(--accent-soft), var(--butter-soft));
+  background: linear-gradient(120deg, var(--accent-soft), 
+var(--butter-soft));
   border-radius: var(--radius); padding: 16px 20px;
   display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
 }
 .banner strong { font-family: "Fraunces", serif; font-size: 1.05rem; }
-.banner p { font-size: .85rem; color: var(--muted); }
+.banner p { font-size: .85rem; color: 
+var(--muted); }
 .chip {
   background: var(--surface); color: var(--accent);
   padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: .85rem;
   box-shadow: var(--shadow);
 }
-.header h1 { font-size: 2.1rem; }
+.header h1 { font-size: 2.1rem; 
+}
 .header p { color: var(--muted); margin-top: 4px; }
 
 .add-bar { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px; }
 .add-bar input[type=text] { flex: 1; min-width: 180px; border: none; outline: none; background: transparent; padding: 8px 10px; font-size: 1rem; }
-.add-bar select {
+.add-bar select 
+{
   border: 1px solid var(--border); background: var(--surface-2);
   border-radius: 10px; padding: 8px 10px; outline: none;
 }
 .btn {
-  background: var(--accent); color: #fff; padding: 9px 18px; border-radius: 10px; font-weight: 700;
+  background: var(--accent); color: #fff; padding: 9px 18px; border-radius: 10px; font-weight: 
+700;
   transition: transform .15s, opacity .2s;
 }
 .btn:hover { opacity: .92; }
 .btn:active { transform: scale(.97); }
 .btn.ghost { background: var(--surface-2); color: var(--text); }
 
-.task-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.task-list { list-style: none; display: flex; flex-direction: column; gap: 
+8px; }
 .task {
   display: flex; align-items: center; gap: 14px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 12px 16px;
   animation: slideIn .3s ease;
-  transition: opacity .3s, transform .3s, background .3s;
-  flex-wrap: wrap;
+  transition: opacity .3s, transform .3s, background 
+.3s;
 }
 .task.removing { opacity: 0; transform: translateX(20px); }
 @keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
 /* Circular checkbox */
 .check {
-  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  width: 22px; height: 
+22px; border-radius: 50%; flex-shrink: 0;
   border: 2px solid var(--muted); display: grid; place-items: center;
   transition: all .2s;
 }
 .check:hover { border-color: var(--accent); }
 .task.done .check { background: var(--sage); border-color: var(--sage); }
-.check svg { opacity: 0; transition: opacity .2s; }
+.check svg { opacity: 0; transition: opacity .2s; 
+}
 .task.done .check svg { opacity: 1; }
 
 /* Strikethrough animation */
-.task-text { 
-  flex: 1 1 200px; 
-  min-width: 160px;
-  position: relative; 
-  word-break: normal;
-  overflow-wrap: break-word; 
-  line-height: 1.4;
-  transition: color .3s; 
-}
+.task-text { flex: 1; position: relative; word-break: break-word; transition: color .3s; }
 .task-text::after {
-  content: ""; position: absolute; left: 0; top: 50%; height: 1.5px; width: 0;
+  content: ""; position: absolute; left: 0; top: 50%; height: 1.5px; width: 
+0;
   background: var(--muted); transition: width .35s ease;
 }
 .task.done .task-text { color: var(--muted); }
 .task.done .task-text::after { width: 100%; }
 
-.pill { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.pill { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: 
+nowrap; }
 .p1 { background: var(--accent-soft); color: var(--accent); }
 .p2 { background: var(--sky-soft); color: var(--sky); }
 .cat-academic { background: var(--lilac-soft); color: var(--lilac); }
 .cat-practicals { background: var(--sage-soft); color: var(--sage); }
-.cat-cf { background: var(--accent-soft); color: var(--accent); }
+.cat-cf { background: 
+var(--accent-soft); color: var(--accent); }
 .cat-python { background: var(--sky-soft); color: var(--sky); }
 .cat-lab { background: var(--sage-soft); color: var(--sage); }
 .cat-aec { background: var(--lilac-soft); color: var(--lilac); }
-.cat-personal { background: var(--butter-soft); color: #b8912f; }
-.trash { color: var(--muted); padding: 4px; border-radius: 8px; opacity: .6; transition: all .2s; margin-left: auto; flex-shrink: 0; }
+.cat-personal { background: var(--butter-soft); color: #b8912f; 
+}
+.trash { color: var(--muted); padding: 4px; border-radius: 8px; opacity: .6; transition: all .2s; }
 .trash:hover { color: var(--danger); opacity: 1; background: var(--surface-2); }
 .empty { text-align: center; color: var(--muted); padding: 40px 0; }
 
-/* ---------- Right column ---------- */
+/* ---------- Right column 
+---------- */
 .aside { display: flex; flex-direction: column; gap: 20px; }
 .aside h3 { font-size: 1.05rem; margin-bottom: 12px; }
 .timer { font-family: "Fraunces", serif; font-size: 3.4rem; text-align: center; letter-spacing: .02em; margin: 6px 0 4px; }
-.timer-label { text-align: center; color: var(--muted); font-size: .85rem; margin-bottom: 14px; }
+.timer-label { text-align: center; color: 
+var(--muted); font-size: .85rem; margin-bottom: 14px; }
 .timer-btns { display: flex; gap: 8px; justify-content: center; }
 .ring-track { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
-.ring-fill { height: 100%; background: var(--accent); width: 0; transition: width 1s linear; }
+.ring-fill { height: 100%; background: var(--accent); width: 0; transition: 
+width 1s linear; }
 .progress-track { height: 10px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
 .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sage), var(--accent)); border-radius: 99px; transition: width .5s ease; }
-.progress-meta { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); margin-top: 8px; }
+.progress-meta { display: flex; justify-content: 
+space-between; font-size: .85rem; color: var(--muted); margin-top: 8px; }
 .big-pct { font-family: "Fraunces", serif; font-size: 2rem; }
 .tip { background: var(--sage-soft); border-color: transparent; }
 .tip p { font-size: .92rem; line-height: 1.55; }
-.tip small { display: block; margin-top: 10px; color: var(--muted); }
+.tip small { display: block; margin-top: 10px; color: var(--muted); 
+}
+
 
 /* ---------- Marks & SGPA ---------- */
 .gpa h2 { font-size: 1.4rem; margin-bottom: 4px; }
 .gpa .sub { color: var(--muted); font-size: .88rem; margin-bottom: 14px; }
 .tbl-wrap { overflow-x: auto; }
-table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
+table.marks { width: 100%; border-collapse: collapse; 
+font-size: .88rem; }
 .marks th { text-align: left; color: var(--muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; padding: 8px 6px; border-bottom: 1px solid var(--border); }
 .marks td { padding: 7px 6px; border-bottom: 1px solid var(--border); }
-.marks input { width: 64px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); outline: none; }
+.marks input { width: 64px; padding: 6px 8px; 
+border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); outline: none; }
 .marks input:focus { border-color: var(--accent); }
 .marks .type { font-size: .7rem; color: var(--muted); }
 .result-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-.result { flex: 1; min-width: 140px; background: var(--surface-2); border-radius: 12px; padding: 14px; }
+.result { flex: 1; 
+min-width: 140px; background: var(--surface-2); border-radius: 12px; padding: 14px; }
 .result small { color: var(--muted); display: block; font-size: .78rem; }
 .result b { font-family: "Fraunces", serif; font-size: 1.7rem; }
 .fail { color: var(--danger); font-weight: 700; }
-.grade-scales { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.grade-scales { display: grid; 
+grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+@media (max-width: 720px) { .grade-scales { grid-template-columns: 1fr; } }
+
 
 /* ---------- Timetable ---------- */
-table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layout: fixed; min-width: 560px; }
+table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; 
+table-layout: fixed; min-width: 560px; }
 .ex-done { opacity: .5; text-decoration: line-through; }
 .ex-today td { background: var(--accent-soft); font-weight: 700; }
 .ex-next td { background: var(--butter-soft); }
-.tt th, .tt td { border: 1px solid var(--border); padding: 7px 5px; text-align: center; vertical-align: middle; }
+.tt th, .tt td { border: 1px solid var(--border); padding: 7px 5px; text-align: center; vertical-align: middle; 
+}
 .tt th { background: var(--surface-2); font-weight: 700; }
-.tt td.time
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>To-Do List — Student Productivity Workspace</title>
-<meta name="description" content="StudySync: a calm, minimalist to-do and focus workspace for students." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-<style>
+.tt td.time { color: var(--muted); font-size: .74rem; white-space: nowrap; }
+.tt td.cls { border-radius: 0; }
+.tt .today { background: var(--accent-soft); }
+.tt .now { outline: 2px solid var(--accent); outline-offset: -2px; font-weight: 
+700; }
+.tt small { display: block; color: var(--muted); font-size: .68rem; }
+.next-class b { font-family: "Fraunces", serif; font-size: 1.15rem; display: block; margin: 4px 0; }
+.next-class small { color: var(--muted); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 
+1100px) { .app { grid-template-columns: 220px 1fr; } .aside { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
+@media (max-width: 720px) { .app { grid-template-columns: 1fr; padding: 14px; } .sidebar { position: static; height: auto; } }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= LEFT: SIDEBAR ================= -->
+  <aside class="sidebar card">
+    <div class="brand">📚 Study<span>Sync</span></div>
+
+    <div class="profile">
+      <div class="avatar">FY</div>
+      <div><strong>Student</strong><small>FY B.Sc. Computer Science</small></div>
+    </div>
+
+    <nav>
+      <div class="section-label">Workspace</div>
+      <button 
+class="nav-item active" data-filter="all">📋 All Tasks <span class="count" id="c-all">0</span></button>
+      <button class="nav-item" data-filter="cf">🖥️ Computer Fundamentals <span class="count" id="c-cf">0</span></button>
+      <button class="nav-item" data-filter="python">🐍 Python Programming <span class="count" 
+id="c-python">0</span></button>
+      <button class="nav-item" data-filter="lab">🧪 Practicals: CS-1, Linux, Web <span class="count" id="c-lab">0</span></button>
+      <button class="nav-item" data-filter="aec">📜 Comm · Constitution · Vedic Maths <span class="count" 
+id="c-aec">0</span></button>
+      <button class="nav-item" data-filter="personal">☀️ Daily Routine <span class="count" id="c-personal">0</span></button>
+      <div class="section-label" style="margin-top:12px">Tools</div>
+      <button class="nav-item" 
+data-view="examSection">📝 Term 1 Exam Timetable</button>
+      <button class="nav-item" data-view="ttSection">🗓️ Class Timetable</button>
+      <button class="nav-item" data-view="gpaSection">🎓 Expected SGPA &amp; CGPA</button>
+    </nav>
+
+    <div>
+      <div class="section-label">Projects</div>
+      <div class="tag-row"><span class="dot" style="background:var(--accent)"></span>#Sem1_Revision</div>
+      <div class="tag-row"><span class="dot" 
+style="background:var(--sage)"></span>#Viva_Prep</div>
+      <div class="tag-row"><span class="dot" style="background:var(--sky)"></span>#Web_Designing</div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Dark 
+mode</button>
+  </aside>
+
+  <!-- ================= CENTER: TASK FEED ================= -->
+  <main class="main">
+    <div class="banner">
+      <div>
+        <strong id="bannerTitle">🎓 Term 1 Exams are coming</strong>
+        <p 
+id="bannerText">Stay consistent — small sessions every day add up.</p>
+      </div>
+      <span class="chip" id="countdown">-- days left</span>
+    </div>
+
+    <div id="tasksView">
+    <div class="header">
+      <h1 id="title">All 
+Tasks</h1>
+      <p id="counter">0 of 0 tasks completed</p>
+    </div>
+
+    <form class="add-bar card" id="addForm">
+      <input type="text" id="taskInput" placeholder="What do you need to study?" autocomplete="off" />
+      <select id="catSelect">
+        <option 
+value="cf">#CompFundamentals</option>
+        <option value="python">#Python</option>
+        <option value="lab">#Practicals</option>
+        <option value="aec">#AEC_VEC_IKS</option>
+        <option 
+value="personal">#Personal</option>
+      </select>
+      <select id="prioSelect">
+        <option value="p1">P1 High</option>
+        <option value="p2" selected>P2 Normal</option>
+      </select>
+      <button class="btn" type="submit">Add Task</button>
+    
+</form>
+
+    <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- ================= EXAM TIMETABLE ================= -->
+    <section class="card gpa view" id="examSection" hidden>
+      <h2>📝 Term 1 · Sem 1 Exam 
+Timetable</h2>
+      <p class="sub">FYBSc (CS) · Regular &amp; ATKT · Exam timing 2:00 pm – 3:15 pm</p>
+      <div class="tbl-wrap"><table class="marks" id="examTable"></table></div>
+      <button class="btn ghost" id="notifyBtn" style="margin-top:14px">🔔 Turn on daily exam 
+reminders</button>
+    </section>
+
+    <!-- ================= TIMETABLE ================= -->
+    <section class="card gpa view" id="ttSection" hidden>
+      <h2>🗓️ Sem 1 Timetable</h2>
+      <p class="sub">FYCS · Room 403 · Today's column is highlighted, and the 
+current class is outlined.</p>
+      <div class="tbl-wrap"><table class="tt" id="ttTable"></table></div>
+    </section>
+
+    <!-- ================= MARKS, SGPA & CGPA ================= -->
+    <section class="card gpa view" id="gpaSection" hidden>
+      <h2>🎓 Expected 
+SGPA &amp; CGPA</h2>
+      <p class="sub">Enter the marks you <b>expect</b> to score in each subject to predict your SGPA. T = Theory, P = Practical, I = Internal.</p>
+      <div class="tbl-wrap">
+        <table class="marks">
+          <thead><tr><th>Type</th><th>Subject</th><th>Marks 
+split</th><th>Credits</th><th>Expected marks</th><th>Grade</th><th>GP</th></tr></thead>
+          <tbody id="marksBody"></tbody>
+        </table>
+      </div>
+      <div class="result-row">
+        <div class="result"><small>Total marks</small><b id="totalMarks">0 / 
+550</b></div>
+        <div class="result"><small>Expected SGPA (Sem 1)</small><b id="sgpa">—</b></div>
+        <div class="result"><small>Final grade</small><b id="sgpaGrade">—</b></div>
+      </div>
+
+      <h2 style="margin-top:26px">📊 CGPA 
+Calculator</h2>
+      <p class="sub">Add the SGPA and credits of each semester you've finished. Sem 1 fills in automatically.</p>
+      <div class="tbl-wrap">
+        <table class="marks">
+          <thead><tr><th>Semester</th><th>SGPA</th><th>Credits</th></tr></thead>
+          <tbody 
+id="cgpaBody"></tbody>
+        </table>
+      </div>
+      <div class="result-row">
+        <div class="result"><small>CGPA</small><b id="cgpa">—</b></div>
+        <div class="result"><small>Grade</small><b id="cgpaGrade">—</b></div>
+      </div>
+
+      <div class="grade-scales">
+        <div><h3 style="font-size:1rem;margin-bottom:6px">Subject grades (out of 50)</h3>
+          <table class="marks"><tbody>
+            <tr><td>O</td><td>10</td><td>45–50</td></tr><tr><td>A+</td><td>9</td><td>40–44</td></tr>
+            <tr><td>A</td><td>8</td><td>35–39</td></tr><tr><td>B+</td><td>7</td><td>30–34</td></tr>
+            <tr><td>B</td><td>6</td><td>25–29</td></tr><tr><td>C</td><td>5</td><td>21–24</td></tr>
+            <tr><td>P</td><td>4</td><td>20</td></tr><tr><td>F</td><td>0</td><td>Below 
+20</td></tr>
+          </tbody></table>
+          <p class="sub" style="margin-top:6px">75-mark subjects are scaled to 50 first.</p>
+        </div>
+        <div><h3 style="font-size:1rem;margin-bottom:6px">SGPA / CGPA grades</h3>
+          <table class="marks"><tbody>
+            
+<tr><td>O</td><td>9.00–10</td></tr><tr><td>A+</td><td>8.00–8.99</td></tr>
+            <tr><td>A</td><td>7.00–7.99</td></tr><tr><td>B+</td><td>6.00–6.99</td></tr>
+            <tr><td>B</td><td>5.50–5.99</td></tr><tr><td>C</td><td>5.00–5.49</td></tr>
+            
+<tr><td>P</td><td>4.00–4.99</td></tr><tr><td>F</td><td>Below 4.00</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= RIGHT: FOCUS & ANALYTICS ================= 
+-->
+  <aside class="aside">
+    <div class="card next-class">
+      <h3>🔔 Class Now / Next</h3>
+      <small id="nowLabel">Now</small><b id="nowClass">—</b>
+      <small id="nextLabel">Next</small><b id="nextClass">—</b>
+    
+</div>
+
+    <div class="card">
+      <h3>⏱️ Study Sprint</h3>
+      <div class="timer" id="timer">25:00</div>
+      <div class="timer-label" id="timerLabel">Ready to focus</div>
+      <div class="ring-track"><div class="ring-fill" 
+id="timerBar"></div></div>
+      <div class="timer-btns">
+        <button class="btn" id="startBtn">Start</button>
+        <button class="btn ghost" id="pauseBtn">Pause</button>
+        <button class="btn ghost" 
+id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📈 Today's Progress</h3>
+      <div class="big-pct" id="pct">0%</div>
+      <div class="progress-track"><div class="progress-fill" 
+id="progressFill"></div></div>
+      <div class="progress-meta"><span id="doneTxt">0 done</span><span id="leftTxt">0 left</span></div>
+    </div>
+
+    <div class="card tip">
+      <h3>💡 Viva Tip</h3>
+      <p id="tipText"></p>
+      <button class="btn 
+ghost" id="nextTip" style="margin-top:12px;font-size:.85rem">Next tip →</button>
+    </div>
+  </aside>
+</div>
+
+<script>
 /* ===========================================================
-   1. THEME TOKENS (CSS variables) — light & dark
+   StudySync — beginner-friendly vanilla JavaScript
+   Everything is saved in localStorage so it survives refresh.
    =========================================================== */
-:root {
-  --bg: #faf6f0;
-  --surface: #ffffff;
-  --surface-2: #f4eee5;
-  --text: #2f2a26;
-  --muted: #8a8079;
-  --border: #ece4d9;
-  --accent: #e07a5f;        /* warm terracotta */
-  --accent-soft: #fbe3da;
-  --sage: #9cb59a;   --sage-soft: #e5efe3;
-  --sky: #8fb3d9;    --sky-soft: #e2ecf7;
-  --butter: #e9c46a; --butter-soft: #faf0d4;
-  --lilac: #b8a1d6;  --lilac-soft: #eee6f7;
-  --danger: #d9534f;
-  --shadow: 0 1px 2px rgba(60,40,20,.04), 0 8px 24px -12px rgba(60,40,20,.12);
-  --radius: 14px;
-}
-body.dark {
-  --bg: #1b1917;
-  --surface: #242120;
-  --surface-2: #2d2927;
-  --text: #f1ebe4;
-  --muted: #a39890;
-  --border: #36312e;
-  --accent-soft: #4a2f27;
-  --sage-soft: #2c3a2b;
-  --sky-soft: #26323f;
-  --butter-soft: #3d3522;
-  --lilac-soft: #352d40;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+
+// ---------- 1. Settings ----------
+const POMODORO_SECONDS = 25 * 
+60;
+
+const CATEGORY_NAMES = {
+  all: "All Tasks",
+  cf: "Computer Fundamentals",
+  python: "Programming using Python",
+  lab: "Practicals — CS Practical 1, Linux OS, Web Designing",
+  aec: "Business Comm 1 · Indian Constitution · 
+Vedic Maths",
+  personal: "Daily Routine"
+};
+const CATEGORY_LABELS = { cf: "#CompFundamentals", python: "#Python", lab: "#Practicals", aec: "#AEC_VEC_IKS", personal: "#Personal" };
+
+const TIPS = [
+  "CF Viva: be ready to explain Von Neumann 
+architecture with a neat diagram.",
+  "Know the difference between Computer Organization and Computer Architecture.",
+  "Draw Gantt charts for scheduling numericals — show waiting & turnaround time.",
+  "Flip-flops (SR, JK, D): remember the truth tables and the JK race-around 
+issue.",
+  "Python Viva: list vs tuple, mutable vs immutable — a classic question.",
+  "Linux practical: chmod, grep, ps, ls -l and pipes are asked often.",
+  "Web Designing: explain your HTML structure and CSS box model clearly.",
+  "Small steps every day beat one giant cram session."
+];
+
+// ---------- 2. Load saved data (or defaults) ----------
+let tasks = JSON.parse(localStorage.getItem("ss_tasks_v2")) || [
+  { id: 1, text: "CF Unit I: Number systems, Boolean algebra & K-Maps", cat: "cf", prio: "p1", done: true },
+  { id: 2, text: "CF Unit II: Addressing modes, RISC 
+vs CISC, cache mapping", cat: "cf", prio: "p1", done: false },
+  { id: 3, text: "CF Unit III: CPU scheduling — FCFS, SJF, SRTF, RR numericals", cat: "cf", prio: "p1", done: false },
+  { id: 4, text: "Python: lists, tuples, dictionaries & functions", cat: "python", prio: "p1", done: false },
+  { id: 5, text: "Linux OS practical: file 
+permissions & shell commands", cat: "lab", prio: "p2", done: true },
+  { id: 6, text: "Web Designing practical: HTML forms + CSS layout", cat: "lab", prio: "p2", done: false },
+  { id: 7, text: "Indian Constitution: Preamble & Fundamental Rights", cat: "aec", prio: "p2", done: false },
+  { id: 8, text: "Vedic 
+Maths: practice multiplication sutras", cat: "aec", prio: "p2", done: false },
+  { id: 9, text: "Morning walk + 8 glasses of water", cat: "personal", prio: "p2", done: true }
+];
+let currentFilter = (CATEGORY_NAMES[localStorage.getItem("ss_filter")] ? 
+localStorage.getItem("ss_filter") : "all");
+let timeLeft = Number(localStorage.getItem("ss_timer")) || POMODORO_SECONDS;
+let tipIndex = 0;
+let timerId = null;
+
+function save() {
+  localStorage.setItem("ss_tasks_v2", 
+JSON.stringify(tasks));
+  localStorage.setItem("ss_filter", currentFilter);
 }
 
+// ---------- 3. Grab elements from the page ----------
+const $ = (id) => document.getElementById(id);
+const taskList = $("taskList");
+
+// ---------- 4. Draw tasks on screen ----------
+function render() {
+  const visible = currentFilter === "all" ? tasks : tasks.filter(t => t.cat === currentFilter);
+  taskList.innerHTML = "";
+
+  if (visible.length === 0) {
+    taskList.innerHTML = '<li class="empty">Nothing here yet ✨ Add your first 
+task above.</li>';
+  }
+
+  visible.forEach(task => {
+    const li = document.createElement("li");
+    li.className = "task" + (task.done ? " done" : "");
+    li.innerHTML = `
+      <button class="check" aria-label="Toggle complete">
+        <svg width="12" 
+height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><path d="M5 12l5 5L20 7"/></svg>
+      </button>
+      <span class="task-text"></span>
+      <span class="pill ${task.prio}">${task.prio === "p1" ? "P1 High" : "P2 Normal"}</span>
+      <span class="pill 
+cat-${task.cat}">${CATEGORY_LABELS[task.cat]}</span>
+      <button class="trash" aria-label="Delete task">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+      
+</button>`;
+    li.querySelector(".task-text").textContent = task.text; // safe text (no HTML injection)
+
+    li.querySelector(".check").onclick = () => toggleTask(task.id, li);
+    li.querySelector(".trash").onclick = () => deleteTask(task.id, 
+li);
+    taskList.appendChild(li);
+  });
+
+  updateStats(visible);
+}
+
+// ---------- 5. Task actions ----------
+function addTask(text, cat, prio) {
+  tasks.unshift({ id: Date.now(), text, cat, prio, done: false 
+});
+  save(); render();
+}
+function toggleTask(id, li) {
+  const task = tasks.find(t => t.id === id);
+  task.done = !task.done;
+  li.classList.toggle("done", task.done);   // animate without full re-render
+  save(); updateStats();
+}
+function deleteTask(id, li) {
+  
+li.classList.add("removing");             // fade-out animation first
+  setTimeout(() => { tasks = tasks.filter(t => t.id !== id); save(); render(); }, 280);
+}
+
+// ---------- 6. Progress counter + progress bar ----------
+function updateStats() {
+  const visible = currentFilter === "all" ? 
+tasks : tasks.filter(t => t.cat === currentFilter);
+  const done = visible.filter(t => t.done).length;
+  $("counter").textContent = `${done} of ${visible.length} tasks completed`;
+
+  const allDone = tasks.filter(t => t.done).length;
+  const pct = tasks.length 
+? Math.round((allDone / tasks.length) * 100) : 0;
+  $("pct").textContent = pct + "%";
+  $("progressFill").style.width = pct + "%";
+  $("doneTxt").textContent = allDone + " done";
+  $("leftTxt").textContent = (tasks.length - allDone) + " left";
+
+  // sidebar 
+counts
+  $("c-all").textContent = tasks.length;
+  ["cf", "python", "lab", "aec", "personal"].forEach(c => $("c-" + c).textContent = tasks.filter(t => t.cat === c).length);
+}
+
+// ---------- 7. Add-task form ----------
+$("addForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const text = $("taskInput").value.trim();
+  if (!text) return;
+  addTask(text, $("catSelect").value, $("prioSelect").value);
+  $("taskInput").value = "";
+});
+
+// ---------- 8. Sidebar filters 
+----------
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", b.dataset.filter === filter));
+  $("title").textContent = CATEGORY_NAMES[filter];
+  if (filter !== "all") $("catSelect").value = filter;
+  save(); render();
+}
+document.querySelectorAll(".nav-item").forEach(btn => btn.onclick = () => setFilter(btn.dataset.filter));
+
+// ---------- 9. Pomodoro timer ----------
+function drawTimer() {
+  const m = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+  const s = 
+String(timeLeft % 60).padStart(2, "0");
+  $("timer").textContent = `${m}:${s}`;
+  $("timerBar").style.width = ((POMODORO_SECONDS - timeLeft) / POMODORO_SECONDS * 100) + "%";
+  localStorage.setItem("ss_timer", timeLeft);
+}
+$("startBtn").onclick = () 
+=> {
+  if (timerId) return;                      // already running
+  $("timerLabel").textContent = "Focusing… you've got this 💪";
+  timerId = setInterval(() => {
+    timeLeft--;
+    drawTimer();
+    if (timeLeft <= 0) {
+      clearInterval(timerId); timerId = 
+null;
+      timeLeft = POMODORO_SECONDS; drawTimer();
+      $("timerLabel").textContent = "Sprint complete! Take a 5 min break ☕";
+      alert("🎉 Study sprint complete! Time for a short break.");
+    }
+  }, 1000);
+};
+$("pauseBtn").onclick = () => {
+  clearInterval(timerId); timerId = null;
+  $("timerLabel").textContent = "Paused";
+};
+$("resetBtn").onclick = () => {
+  clearInterval(timerId); timerId = null;
+  timeLeft = 
+POMODORO_SECONDS; drawTimer();
+  $("timerLabel").textContent = "Ready to focus";
+};
+
+// ---------- 10. Light / Dark theme ----------
+function applyTheme(theme) {
+  document.body.classList.toggle("dark", theme === 
+"dark");
+  $("themeToggle").textContent = theme === "dark" ? "☀️ Light mode" : "🌙 Dark mode";
+  localStorage.setItem("ss_theme", theme);
+}
+$("themeToggle").onclick = () => 
+applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
+
+// ---------- 11. Exam countdown + tips ----------
+function showTip() { $("tipText").textContent = TIPS[tipIndex]; }
+$("nextTip").onclick = () => { tipIndex = (tipIndex + 1) % TIPS.length; showTip(); };
+
+
+// ---------- 12. Marks, SGPA & CGPA ----------
+// Sem 1 subjects and marks split (from the class sheet)
+const SUBJECTS = [
+  { type: "Major", name: "Computer Fundamentals", split: "30 T + 25 P + 20 I", max: 75, credits: 2 },
+  { type: "Major", name: "Python Programming",    
+ split: "30 T + 25 P + 20 I", max: 75, credits: 2 },
+  { type: "Major", name: "CF + Python Practical",  split: "50 P",               max: 50, credits: 2 },
+  { type: "VSC",   name: "Web Designing",          split: "50 P",               max: 50, credits: 2 },
+  { type: "SEC",   name: "Linux",                  split: "30 T + 20 I",        max: 50, credits: 2 
+},
+  { type: "IKS",   name: "Vedic Math",             split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "AEC",   name: "Business Communication", split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "VEC",   name: "EVS",                    split: "30 T + 20 I",        max: 50, credits: 2 
+},
+  { type: "OE-1",  name: "Open Elective 1",        split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "OE-2",  name: "Open Elective 2",        split: "30 T + 20 I",        max: 50, credits: 2 }
+];
+let marks = JSON.parse(localStorage.getItem("ss_marks")) || {};
+let semRows = 
+JSON.parse(localStorage.getItem("ss_sems")) || [1,2,3,4,5,6].map(n => ({ sgpa: "", credits: n === 1 ? 20 : "" }));
+
+// Subject grade: marks are first scaled to "out of 50"
+function subjectGrade(score, max) {
+  const m = Math.round(score / max * 50);
+  if (m >= 45) return ["O", 
+10];
+  if (m >= 40) return ["A+", 9];
+  if (m >= 35) return ["A", 8];
+  if (m >= 30) return ["B+", 7];
+  if (m >= 25) return ["B", 6];
+  if (m >= 21) return ["C", 5];
+  if (m >= 20) return ["P", 4];
+  return ["F", 0];
+}
+// Overall grade from an SGPA / CGPA
+function pointerGrade(g) {
+  if (g >= 9) return "O"; if (g >= 8) return "A+"; if (g >= 7) return "A";
+  if (g >= 6) return "B+"; if (g >= 5.5) return "B"; if (g >= 5) return "C";
+  if (g >= 4) return "P"; return "F";
+}
+
+function buildMarksTable() {
+  $("marksBody").innerHTML = SUBJECTS.map((s, i) => `
+    <tr><td class="type">${s.type}</td><td>${s.name}</td><td class="type">${s.split}</td><td>${s.credits}</td>
+    <td><input type="number" min="0" 
+max="${s.max}" data-i="${i}" value="${marks[i] ?? ""}" placeholder="/${s.max}"></td>
+    <td id="g${i}">—</td><td id="gp${i}">—</td></tr>`).join("");
+  $("marksBody").querySelectorAll("input").forEach(inp => inp.oninput = () => {
+    const i = inp.dataset.i, max = 
+SUBJECTS[i].max;
+    if (inp.value === "") delete marks[i];
+    else marks[i] = Math.min(max, Math.max(0, Number(inp.value)));
+    localStorage.setItem("ss_marks", JSON.stringify(marks));
+    calcSGPA();
+  });
+
+  $("cgpaBody").innerHTML = semRows.map((r, i) => `
+    <tr><td>Semester ${i + 1}</td>
+    <td><input type="number" step="0.01" min="0" max="10" data-k="sgpa" data-i="${i}" value="${r.sgpa}" ${i === 0 ? "readonly" : ""}></td>
+    <td><input type="number" min="0" 
+data-k="credits" data-i="${i}" value="${r.credits}"></td></tr>`).join("");
+  $("cgpaBody").querySelectorAll("input").forEach(inp => inp.oninput = () => {
+    semRows[inp.dataset.i][inp.dataset.k] = inp.value;
+    localStorage.setItem("ss_sems", 
+JSON.stringify(semRows));
+    calcCGPA();
+  });
+}
+
+// SGPA = sum(credits × grade point) ÷ sum(credits)
+function calcSGPA() {
+  let total = 0, cp = 0, cr = 0, filled = 0, failed = false;
+  SUBJECTS.forEach((s, i) => {
+    if (marks[i] === undefined) { 
+$("g"+i).textContent = "—"; $("gp"+i).textContent = "—"; return; }
+    const [g, gp] = subjectGrade(marks[i], s.max);
+    $("g"+i).innerHTML = g === "F" ? '<span class="fail">F</span>' : g;
+    $("gp"+i).textContent = gp;
+    total += marks[i]; cp += s.credits * gp; cr += s.credits; 
+filled++;
+    if (gp === 0) failed = true;
+  });
+  $("totalMarks").textContent = `${total} / 550`;
+  if (!filled) { $("sgpa").textContent = "—"; $("sgpaGrade").textContent = "—"; semRows[0].sgpa = ""; }
+  else {
+    const sgpa = cp / 
+cr;
+    $("sgpa").textContent = sgpa.toFixed(2) + (filled < SUBJECTS.length ? "*" : "");
+    $("sgpaGrade").innerHTML = failed ? '<span class="fail">ATKT</span>' : pointerGrade(sgpa);
+    semRows[0].sgpa = sgpa.toFixed(2);
+  }
+  const first = 
+$("cgpaBody").querySelector('input[data-i="0"][data-k="sgpa"]');
+  if (first) first.value = semRows[0].sgpa;
+  localStorage.setItem("ss_sems", JSON.stringify(semRows));
+  calcCGPA();
+}
+
+// CGPA = sum(SGPA × semester credits) ÷ 
+sum(semester credits)
+function calcCGPA() {
+  let pts = 0, cr = 0;
+  semRows.forEach(r => { const g = parseFloat(r.sgpa), c = parseFloat(r.credits); if (g >= 0 && c > 0) { pts += g * c; cr += c; } });
+  if (!cr) { $("cgpa").textContent = "—"; $("cgpaGrade").textContent = "—"; return; 
+}
+  const cgpa = pts / cr;
+  $("cgpa").textContent = cgpa.toFixed(2);
+  $("cgpaGrade").textContent = pointerGrade(cgpa);
+}
+
+
+// ---------- 13. Timetable ----------
+// Short codes → subject 
+names
+const SUBJ = {
+  "CF": "Computer Fundamentals", "CF (P)": "CF Practical", "PYTHON": "Python", "PYTHON (P)": "Python Practical",
+  "VEC": "EVS", "IKS": "Vedic Math", "AEC": "Business Comm", "SEC": "Linux", "VSC": "Web Designing",
+  "OE A": "Open Elective A", "OE B": "Open Elective B", "STUD_CONN (CS DEPT)": 
+"Student Connect"
+};
+const SLOTS = [
+  ["10:00", "11:00"], ["11:00", "12:00"], ["12:00", "13:00"], ["13:30", "14:30"],
+  ["14:45", "15:45"], ["15:45", "16:45"], ["16:45", "17:45"]
+];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// One row per time slot, one entry per day (Mon 
+→ Sat). "" = free.
+const TIMETABLE = [
+  ["", "", "", "", "", "SHC+PRD-STUD_CONN (CS DEPT)"],
+  ["LCT-CF", "", "", "", "", "LCT-CF"],
+  ["PRD-PYTHON", "SFC-OE A", "SFC-OE B", "SFC-OE A", "SFC-OE B", ""],
+  ["DPG-VEC", "SHC-IKS", "ASH-AEC", "DPG-VEC", "PRD-PYTHON", "PRD+SHC-PYTHON (P)"],
+  ["LCT-CF (P)", "RJD-SEC", 
+"RJD+LCT-VSC", "ASH-AEC", "RJD+LCT-VSC", "PRD+SHC-PYTHON (P)"],
+  ["LCT-CF (P)", "RJD-SEC", "RJD+LCT-VSC", "RJD-SEC", "RJD+LCT-VSC", "SHC-IKS"],
+  ["", "", "", "RJD-SEC", "", ""]
+];
+const fmt = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "pm" : "am"; h = h % 12 || 12; return 
+`${h}:${String(m).padStart(2,"0")} ${ap}`; };
+const toMin = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+function splitCell(c) { const i = c.indexOf("-"); return { teacher: c.slice(0, i), code: c.slice(i + 1) }; }
+
+function renderTimetable() {
+  const now = new Date(), 
+dayIdx = now.getDay() - 1, mins = now.getHours() * 60 + now.getMinutes();
+  let html = "<tr><th>Time</th>" + DAYS.map((d, i) => `<th class="${i === dayIdx ? "today" : ""}">${d}</th>`).join("") + "</tr>";
+  SLOTS.forEach(([a, b], r) => {
+    const live = mins >= toMin(a) && mins < 
+toMin(b);
+    html += `<tr><td class="time">${fmt(a)}<br>${fmt(b)}</td>`;
+    TIMETABLE[r].forEach((c, d) => {
+      let cls = d === dayIdx ? "today" : "";
+      if (d === dayIdx && live && c) cls += " now";
+      if (!c) { html += `<td class="${cls}"></td>`; return; 
+}
+      const { teacher, code } = splitCell(c);
+      html += `<td class="${cls}">${SUBJ[code] || code}<small>${teacher}</small></td>`;
+    });
+    html += "</tr>";
+  });
+  $("ttTable").innerHTML = html;
+
+  // Now / Next widget
+  let nowTxt = "No class right now", nextTxt = "No more classes today 🎉", nextLbl = "Next";
+  if (dayIdx >= 0 && dayIdx < 6) {
+    SLOTS.forEach(([a, b], r) => {
+      const c = TIMETABLE[r][dayIdx]; if (!c) return;
+      const name = 
+SUBJ[splitCell(c).code];
+      if (mins >= toMin(a) && mins < toMin(b)) nowTxt = `${name} · till ${fmt(b)}`;
+      else if (toMin(a) > mins && nextLbl === "Next") { nextTxt = name; nextLbl = `Next at ${fmt(a)}`; }
+    });
+  } else { nowTxt = "Sunday — rest day ☀️"; nextTxt = "Mon 11:00 am · Computer Fundamentals"; }
+  
+$("nowClass").textContent = nowTxt; $("nextClass").textContent = nextTxt; $("nextLabel").textContent = nextLbl;
+}
+
+
+// ---------- 15. Term 1 exam timetable + daily reminders ----------
+const EXAMS = [
+  { date: "2026-10-19", 
+subject: "Business Communication Skills I" },
+  { date: "2026-10-21", subject: "Computer Fundamentals" },
+  { date: "2026-10-22", subject: "Environmental Management & Sustainable Development I" },
+  { date: "2026-10-23", subject: "Programming using Python" },
+  { date: "2026-10-24", 
+subject: "Vedic Mathematics" },
+  { date: "2026-10-29", subject: "Open Elective (Group A)" },
+  { date: "2026-10-31", subject: "Open Elective (Group B)" }
+];
+const EXAM_END = 15 * 60 + 15; // exams finish at 3:15 pm
+const dayStart = d => { const x = new Date(d); 
+x.setHours(0,0,0,0); return x; };
+const prettyDate = d => new Date(d + "T00:00").toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" });
+
+// The next exam that hasn't finished yet
+function nextExam() {
+  const now = new Date(), mins = now.getHours() * 
+60 + now.getMinutes(), today = dayStart(now);
+  return EXAMS.find(e => { const d = dayStart(e.date + "T00:00"); return d > today || (+d === +today && mins < EXAM_END); });
+}
+function daysUntil(dateStr) { return Math.round((dayStart(dateStr + "T00:00") - dayStart(new Date())) / 86400000); 
+}
+
+function reminderText() {
+  const e = nextExam();
+  if (!e) return { title: "🎉 Term 1 exams are over!", text: "Great job — time to rest and recharge.", chip: "All done" };
+  const n = daysUntil(e.date);
+  const remaining = EXAMS.length - 
+EXAMS.indexOf(e);
+  const when = n === 0 ? "TODAY at 2:00 pm" : n === 1 ? "TOMORROW at 2:00 pm" : `on ${prettyDate(e.date)}`;
+  return {
+    title: `📝 Next exam: ${e.subject}`,
+    text: `${when} · ${remaining} exam${remaining > 1 ? "s" : ""} left in Term 1`,
+    chip: n === 0 ? "Today! 
+🍀" : `⏳ ${n} day${n > 1 ? "s" : ""} left`
+  };
+}
+
+function renderExams() {
+  const r = reminderText();
+  $("bannerTitle").textContent = r.title; $("bannerText").textContent = r.text; $("countdown").textContent = 
+r.chip;
+  const next = nextExam();
+  $("examTable").innerHTML = "<thead><tr><th>Date</th><th>Subject</th><th>Status</th></tr></thead><tbody>" +
+    EXAMS.map(e => {
+      const n = daysUntil(e.date), isNext = e === next;
+      const done = !isNext 
+&& n <= 0;
+      const status = done ? "✅ Done" : n === 0 ? "Today" : `In ${n} day${n > 1 ? "s" : ""}`;
+      return `<tr class="${done ? "ex-done" : n === 0 ? "ex-today" : isNext ? "ex-next" : ""}"><td>${prettyDate(e.date)}</td><td>${e.subject}</td><td>${status}</td></tr>`;
+    }).join("") + "</tbody>";
+}
+
+// Show a browser notification once per day (if allowed)
+function dailyReminder() {
+  const key = new Date().toDateString();
+  if (localStorage.getItem("ss_reminded") === key) return;
+  const r = reminderText();
+  if ("Notification" in window && 
+Notification.permission === "granted") {
+    new Notification(r.title, { body: r.text });
+    localStorage.setItem("ss_reminded", key);
+  }
+}
+$("notifyBtn").onclick = async () => {
+  if (!("Notification" in window)) return alert("Your browser 
+doesn't support notifications.");
+  const p = await Notification.requestPermission();
+  if (p === "granted") { localStorage.removeItem("ss_reminded"); dailyReminder(); $("notifyBtn").textContent = "✅ Daily reminders on"; }
+};
+if ("Notification" in 
+window && Notification.permission === "granted") $("notifyBtn").textContent = "✅ Daily reminders on";
+
+// ---------- 16. Switching between Tasks and Tools ----------
+function showView(id) {
+  $("tasksView").hidden = !!id;
+  
+document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== id);
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", id ? b.dataset.view === id : b.dataset.filter === currentFilter));
+}
+document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => 
+showView(b.dataset.view));
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => showView(null)));
+
+// ---------- 17. Start the app ----------
+applyTheme(localStorage.getItem("ss_theme") || "light");
+showTip();
+drawTimer();
+setFilter(currentFilter);
+buildMarksTable();
+calcSGPA();
+renderTimetable();
+setInterval(renderTimetable, 60000);
+renderExams();
+dailyReminder();
+setInterval(() => { renderExams(); dailyReminder(); }, 60000);
+</script>
+</body>
+</html>
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= LEFT: SIDEBAR ================= -->
+  <aside class="sidebar 
+card">
+    <div class="brand">📚 Study<span>Sync</span></div>
+
+    <div class="profile">
+      <div class="avatar">FY</div>
+      <div><strong>Student</strong><small>FY B.Sc. Computer Science</small></div>
+    </div>
+
+    <nav>
+      <div class="section-label">Workspace</div>
+      <button class="nav-item active" data-filter="all">📋 All Tasks <span class="count" id="c-all">0</span></button>
+      <button class="nav-item" data-filter="cf">🖥️ Computer Fundamentals <span class="count" 
+id="c-cf">0</span></button>
+      <button class="nav-item" data-filter="python">🐍 Python Programming <span class="count" id="c-python">0</span></button>
+      <button class="nav-item" data-filter="lab">🧪 Practicals: CS-1, Linux, Web <span class="count" 
+id="c-lab">0</span></button>
+      <button class="nav-item" data-filter="aec">📜 Comm · Constitution · Vedic Maths <span class="count" id="c-aec">0</span></button>
+      <button class="nav-item" data-filter="personal">☀️ Daily Routine <span class="count" 
+id="c-personal">0</span></button>
+      <div class="section-label" style="margin-top:12px">Tools</div>
+      <button class="nav-item" data-view="examSection">📝 Term 1 Exam Timetable</button>
+      <button class="nav-item" data-view="ttSection">🗓️ Class 
+Timetable</button>
+      <button class="nav-item" data-view="gpaSection">🎓 Expected SGPA &amp; CGPA</button>
+    </nav>
+
+    <div>
+      <div class="section-label">Projects</div>
+      <div class="tag-row"><span class="dot" 
+style="background:var(--accent)"></span>#Sem1_Revision</div>
+      <div class="tag-row"><span class="dot" style="background:var(--sage)"></span>#Viva_Prep</div>
+      <div class="tag-row"><span class="dot" style="background:var(--sky)"></span>#Web_Designing</
+div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Dark mode</button>
+  </aside>
+
+  <!-- ================= CENTER: TASK FEED ================= -->
+  <main class="main">
+    <div class="banner">
+      
+<div>
+        <strong id="bannerTitle">🎓 Term 1 Exams are coming</strong>
+        <p id="bannerText">Stay consistent — small sessions every day add up.</p>
+      </div>
+      <span class="chip" id="countdown">-- days 
+left</span>
+    </div>
+
+    <div id="tasksView">
+    <div class="header">
+      <h1 id="title">All Tasks</h1>
+      <p id="counter">0 of 0 tasks completed</p>
+    </div>
+
+    <form class="add-bar card" id="addForm">
+      <input type="text" 
+id="taskInput" placeholder="What do you need to study?" autocomplete="off" />
+      <select id="catSelect">
+        <option value="cf">#CompFundamentals</option>
+        <option value="python">#Python</option>
+        <option 
+value="lab">#Practicals</option>
+        <option value="aec">#AEC_VEC_IKS</option>
+        <option value="personal">#Personal</option>
+      </select>
+      <select id="prioSelect">
+        <option value="p1">P1 High</option>
+        <option value="p2" selected>P2 
+Normal</option>
+      </select>
+      <button class="btn" type="submit">Add Task</button>
+    </form>
+
+    <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <!-- ================= EXAM TIMETABLE ================= 
+-->
+    <section class="card gpa view" id="examSection" hidden>
+      <h2>📝 Term 1 · Sem 1 Exam Timetable</h2>
+      <p class="sub">FYBSc (CS) · Regular &amp; ATKT · Exam timing 2:00 pm – 3:15 pm</p>
+      <div class="tbl-wrap"><table class="marks" 
+id="examTable"></table></div>
+      <button class="btn ghost" id="notifyBtn" style="margin-top:14px">🔔 Turn on daily exam reminders</button>
+    </section>
+
+    <!-- ================= TIMETABLE ================= -->
+    <section class="card gpa view" id="ttSection" 
+hidden>
+      <h2>🗓️ Sem 1 Timetable</h2>
+      <p class="sub">FYCS · Room 403 · Today's column is highlighted, and the current class is outlined.</p>
+      <div class="tbl-wrap"><table class="tt" id="ttTable"></table></div>
+    </section>
+
+    <!-- 
+================= MARKS, SGPA & CGPA ================= -->
+    <section class="card gpa view" id="gpaSection" hidden>
+      <h2>🎓 Expected SGPA &amp; CGPA</h2>
+      <p class="sub">Enter the marks you <b>expect</b> to score in each subject to predict your SGPA. T = Theory, P = Practical, I = 
+Internal.</p>
+      <div class="tbl-wrap">
+        <table class="marks">
+          <thead><tr><th>Type</th><th>Subject</th><th>Marks split</th><th>Credits</th><th>Expected marks</th><th>Grade</th><th>GP</th></tr></thead>
+          <tbody id="marksBody"></tbody>
+        
+</table>
+      </div>
+      <div class="result-row">
+        <div class="result"><small>Total marks</small><b id="totalMarks">0 / 550</b></div>
+        <div class="result"><small>Expected SGPA (Sem 1)</small><b id="sgpa">—</b></div>
+        <div 
+class="result"><small>Final grade</small><b id="sgpaGrade">—</b></div>
+      </div>
+
+      <h2 style="margin-top:26px">📊 CGPA Calculator</h2>
+      <p class="sub">Add the SGPA and credits of each semester you've finished. Sem 1 fills in 
+automatically.</p>
+      <div class="tbl-wrap">
+        <table class="marks">
+          <thead><tr><th>Semester</th><th>SGPA</th><th>Credits</th></tr></thead>
+          <tbody id="cgpaBody"></tbody>
+        </table>
+      </div>
+      <div 
+class="result-row">
+        <div class="result"><small>CGPA</small><b id="cgpa">—</b></div>
+        <div class="result"><small>Grade</small><b id="cgpaGrade">—</b></div>
+      </div>
+
+      <div class="grade-scales">
+        <div><h3 
+style="font-size:1rem;margin-bottom:6px">Subject grades (out of 50)</h3>
+          <table class="marks"><tbody>
+            <tr><td>O</td><td>10</td><td>45–50</td></tr><tr><td>A+</td><td>9</td><td>40–44</td></tr>
+            
+<tr><td>A</td><td>8</td><td>35–39</td></tr><tr><td>B+</td><td>7</td><td>30–34</td></tr>
+            <tr><td>B</td><td>6</td><td>25–29</td></tr><tr><td>C</td><td>5</td><td>21–24</td></tr>
+            <tr><td>P</td><td>4</td><td>20</td></tr><tr><td>F</td><td>0</td><td>Below 20</td></tr>
+          
+</tbody></table>
+          <p class="sub" style="margin-top:6px">75-mark subjects are scaled to 50 first.</p>
+        </div>
+        <div><h3 style="font-size:1rem;margin-bottom:6px">SGPA / CGPA grades</h3>
+          <table class="marks"><tbody>
+            
+<tr><td>O</td><td>9.00–10</td></tr><tr><td>A+</td><td>8.00–8.99</td></tr>
+            <tr><td>A</td><td>7.00–7.99</td></tr><tr><td>B+</td><td>6.00–6.99</td></tr>
+            <tr><td>B</td><td>5.50–5.99</td></tr><tr><td>C</td><td>5.00–5.49</td></tr>
+            
+<tr><td>P</td><td>4.00–4.99</td></tr><tr><td>F</td><td>Below 4.00</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= RIGHT: FOCUS & ANALYTICS ================= 
+-->
+  <aside class="aside">
+    <div class="card next-class">
+      <h3>🔔 Class Now / Next</h3>
+      <small id="nowLabel">Now</small><b id="nowClass">—</b>
+      <small id="nextLabel">Next</small><b id="nextClass">—</b>
+    
+</div>
+
+    <div class="card">
+      <h3>⏱️ Study Sprint</h3>
+      <div class="timer" id="timer">25:00</div>
+      <div class="timer-label" id="timerLabel">Ready to focus</div>
+      <div class="ring-track"><div class="ring-fill" 
+id="timerBar"></div></div>
+      <div class="timer-btns">
+        <button class="btn" id="startBtn">Start</button>
+        <button class="btn ghost" id="pauseBtn">Pause</button>
+        <button class="btn ghost" 
+id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📈 Today's Progress</h3>
+      <div class="big-pct" id="pct">0%</div>
+      <div class="progress-track"><div class="progress-fill" 
+id="progressFill"></div></div>
+      <div class="progress-meta"><span id="doneTxt">0 done</span><span id="leftTxt">0 left</span></div>
+    </div>
+
+    <div class="card tip">
+      <h3>💡 Viva Tip</h3>
+      <p id="tipText"></p>
+      <button class="btn 
+ghost" id="nextTip" style="margin-top:12px;font-size:.85rem">Next tip →</button>
+    </div>
+  </aside>
+</div>
+
+<script>
 /* ===========================================================
-   2. BASE
+   StudySync — beginner-friendly vanilla JavaScript
+   Everything is saved in localStorage so it survives refresh.
    =========================================================== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: "Nunito Sans", system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  transition: background .3s, color .3s;
-  min-height: 100vh;
-}
-h1, h2, h3, .serif { font-family: "Fraunces", Georgia, serif; font-weight: 600; }
-button, input, select { font: inherit; color: inherit; }
-button { cursor: pointer; border: none; background: none; }
 
-/* ===========================================================
-   3. LAYOUT — 3 columns
-   =========================================================== */
-.app {
-  display: grid;
-  grid-template-columns: 250px 1fr 300px;
-  gap: 24px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px;
-  min-height: 100vh;
-}
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 20px;
+// ---------- 1. Settings ----------
+const POMODORO_SECONDS = 25 * 
+60;
+
+const CATEGORY_NAMES = {
+  all: "All Tasks",
+  cf: "Computer Fundamentals",
+  python: "Programming using Python",
+  lab: "Practicals — CS Practical 1, Linux OS, Web Designing",
+  aec: "Business Comm 1 · Indian Constitution · 
+Vedic Maths",
+  personal: "Daily Routine"
+};
+const CATEGORY_LABELS = { cf: "#CompFundamentals", python: "#Python", lab: "#Practicals", aec: "#AEC_VEC_IKS", personal: "#Personal" };
+
+const TIPS = [
+  "CF Viva: be ready to explain Von Neumann 
+architecture with a neat diagram.",
+  "Know the difference between Computer Organization and Computer Architecture.",
+  "Draw Gantt charts for scheduling numericals — show waiting & turnaround time.",
+  "Flip-flops (SR, JK, D): remember the truth tables and the JK race-around 
+issue.",
+  "Python Viva: list vs tuple, mutable vs immutable — a classic question.",
+  "Linux practical: chmod, grep, ps, ls -l and pipes are asked often.",
+  "Web Designing: explain your HTML structure and CSS box model clearly.",
+  "Small steps every day beat one giant cram session."
+];
+
+// ---------- 2. Load saved data (or defaults) ----------
+let tasks = JSON.parse(localStorage.getItem("ss_tasks_v2")) || [
+  { id: 1, text: "CF Unit I: Number systems, Boolean algebra & K-Maps", cat: "cf", prio: "p1", done: true },
+  { id: 2, text: "CF Unit II: Addressing modes, RISC 
+vs CISC, cache mapping", cat: "cf", prio: "p1", done: false },
+  { id: 3, text: "CF Unit III: CPU scheduling — FCFS, SJF, SRTF, RR numericals", cat: "cf", prio: "p1", done: false },
+  { id: 4, text: "Python: lists, tuples, dictionaries & functions", cat: "python", prio: "p1", done: false },
+  { id: 5, text: "Linux OS practical: file 
+permissions & shell commands", cat: "lab", prio: "p2", done: true },
+  { id: 6, text: "Web Designing practical: HTML forms + CSS layout", cat: "lab", prio: "p2", done: false },
+  { id: 7, text: "Indian Constitution: Preamble & Fundamental Rights", cat: "aec", prio: "p2", done: false },
+  { id: 8, text: "Vedic 
+Maths: practice multiplication sutras", cat: "aec", prio: "p2", done: false },
+  { id: 9, text: "Morning walk + 8 glasses of water", cat: "personal", prio: "p2", done: true }
+];
+let currentFilter = (CATEGORY_NAMES[localStorage.getItem("ss_filter")] ? 
+localStorage.getItem("ss_filter") : "all");
+let timeLeft = Number(localStorage.getItem("ss_timer")) || POMODORO_SECONDS;
+let tipIndex = 0;
+let timerId = null;
+
+function save() {
+  localStorage.setItem("ss_tasks_v2", 
+JSON.stringify(tasks));
+  localStorage.setItem("ss_filter", currentFilter);
 }
 
-/* ---------- Sidebar ---------- */
-.sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 24px; height: calc(100vh - 48px); }
-.brand { font-family: "Fraunces", serif; font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
-.brand span { color: var(--accent); }
-.profile { display: flex; gap: 12px; align-items: center; }
-.avatar {
-  width: 42px; height: 42px; border-radius: 50%;
-  background: var(--accent-soft); color: var(--accent);
-  display: grid; place-items: center; font-weight: 700;
-}
-.profile small { color: var(--muted); display: block; font-size: .78rem; }
-.section-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; padding-left: 10px; }
-.nav-item {
-  width: 100%; text-align: left; padding: 9px 10px; border-radius: 10px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: .92rem; transition: background .2s;
-}
-.nav-item:hover { background: var(--surface-2); }
-.nav-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
-.nav-item .count { font-size: .75rem; color: var(--muted); }
-.tag-row { display: flex; align-items: center; gap: 10px; padding: 7px 10px; font-size: .9rem; color: var(--muted); }
-.dot { width: 9px; height: 9px; border-radius: 50%; }
-.theme-toggle {
-  margin-top: auto; padding: 10px; border-radius: 10px;
-  border: 1px solid var(--border); background: var(--surface);
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: background .2s;
-}
-.theme-toggle:hover { background: var(--surface-2); }
+// ---------- 3. Grab elements from the page ----------
+const $ = (id) => document.getElementById(id);
+const taskList = $("taskList");
 
-/* ---------- Main ---------- */
-.main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-.banner {
-  background: linear-gradient(120deg, var(--accent-soft), var(--butter-soft));
-  border-radius: var(--radius); padding: 16px 20px;
-  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-}
-.banner strong { font-family: "Fraunces", serif; font-size: 1.05rem; }
-.banner p { font-size: .85rem; color: var(--muted); }
-.chip {
-  background: var(--surface); color: var(--accent);
-  padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: .85rem;
-  box-shadow: var(--shadow);
-}
-.header h1 { font-size: 2.1rem; }
-.header p { color: var(--muted); margin-top: 4px; }
+// ---------- 4. Draw tasks on screen ----------
+function render() {
+  const visible = currentFilter === "all" ? tasks : tasks.filter(t => t.cat === currentFilter);
+  taskList.innerHTML = "";
 
-.add-bar { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px; }
-.add-bar input[type=text] { flex: 1; min-width: 180px; border: none; outline: none; background: transparent; padding: 8px 10px; font-size: 1rem; }
-.add-bar select {
-  border: 1px solid var(--border); background: var(--surface-2);
-  border-radius: 10px; padding: 8px 10px; outline: none;
+  if (visible.length === 0) {
+    taskList.innerHTML = '<li class="empty">Nothing here yet ✨ Add your first 
+task above.</li>';
+  }
+
+  visible.forEach(task => {
+    const li = document.createElement("li");
+    li.className = "task" + (task.done ? " done" : "");
+    li.innerHTML = `
+      <button class="check" aria-label="Toggle complete">
+        <svg width="12" 
+height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><path d="M5 12l5 5L20 7"/></svg>
+      </button>
+      <span class="task-text"></span>
+      <span class="pill ${task.prio}">${task.prio === "p1" ? "P1 High" : "P2 Normal"}</span>
+      <span class="pill 
+cat-${task.cat}">${CATEGORY_LABELS[task.cat]}</span>
+      <button class="trash" aria-label="Delete task">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+      
+</button>`;
+    li.querySelector(".task-text").textContent = task.text; // safe text (no HTML injection)
+
+    li.querySelector(".check").onclick = () => toggleTask(task.id, li);
+    li.querySelector(".trash").onclick = () => deleteTask(task.id, 
+li);
+    taskList.appendChild(li);
+  });
+
+  updateStats(visible);
 }
-.btn {
-  background: var(--accent); color: #fff; padding: 9px 18px; border-radius: 10px; font-weight: 700;
-  transition: transform .15s, opacity .2s;
+
+// ---------- 5. Task actions ----------
+function addTask(text, cat, prio) {
+  tasks.unshift({ id: Date.now(), text, cat, prio, done: false 
+});
+  save(); render();
 }
-.btn:hover { opacity: .92; }
-.btn:active { transform: scale(.97); }
-.btn.ghost { background: var(--surface-2); color: var(--text); }
-
-.task-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.task {
-  display: flex; align-items: center; gap: 14px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 12px 16px;
-  animation: slideIn .3s ease;
-  transition: opacity .3s, transform .3s, background .3s;
-  flex-wrap: wrap;
+function toggleTask(id, li) {
+  const task = tasks.find(t => t.id === id);
+  task.done = !task.done;
+  li.classList.toggle("done", task.done);   // animate without full re-render
+  save(); updateStats();
 }
-.task.removing { opacity: 0; transform: translateX(20px); }
-@keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
-
-/* Circular checkbox */
-.check {
-  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
-  border: 2px solid var(--muted); display: grid; place-items: center;
-  transition: all .2s;
+function deleteTask(id, li) {
+  
+li.classList.add("removing");             // fade-out animation first
+  setTimeout(() => { tasks = tasks.filter(t => t.id !== id); save(); render(); }, 280);
 }
-.check:hover { border-color: var(--accent); }
-.task.done .check { background: var(--sage); border-color: var(--sage); }
-.check svg { opacity: 0; transition: opacity .2s; }
-.task.done .check svg { opacity: 1; }
 
-/* Strikethrough animation */
-.task-text { 
-  flex: 1 1 200px; 
-  min-width: 160px;
-  position: relative; 
-  word-break: normal;
-  overflow-wrap: break-word; 
-  line-height: 1.4;
-  transition: color .3s; 
+// ---------- 6. Progress counter + progress bar ----------
+function updateStats() {
+  const visible = currentFilter === "all" ? 
+tasks : tasks.filter(t => t.cat === currentFilter);
+  const done = visible.filter(t => t.done).length;
+  $("counter").textContent = `${done} of ${visible.length} tasks completed`;
+
+  const allDone = tasks.filter(t => t.done).length;
+  const pct = tasks.length 
+? Math.round((allDone / tasks.length) * 100) : 0;
+  $("pct").textContent = pct + "%";
+  $("progressFill").style.width = pct + "%";
+  $("doneTxt").textContent = allDone + " done";
+  $("leftTxt").textContent = (tasks.length - allDone) + " left";
+
+  // sidebar 
+counts
+  $("c-all").textContent = tasks.length;
+  ["cf", "python", "lab", "aec", "personal"].forEach(c => $("c-" + c).textContent = tasks.filter(t => t.cat === c).length);
 }
-.task-text::after {
-  content: ""; position: absolute; left: 0; top: 50%; height: 1.5px; width: 0;
-  background: var(--muted); transition: width .35s ease;
+
+// ---------- 7. Add-task form ----------
+$("addForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const text = $("taskInput").value.trim();
+  if (!text) return;
+  addTask(text, $("catSelect").value, $("prioSelect").value);
+  $("taskInput").value = "";
+});
+
+// ---------- 8. Sidebar filters 
+----------
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", b.dataset.filter === filter));
+  $("title").textContent = CATEGORY_NAMES[filter];
+  if (filter !== "all") $("catSelect").value = filter;
+  save(); render();
 }
-.task.done .task-text { color: var(--muted); }
-.task.done .task-text::after { width: 100%; }
+document.querySelectorAll(".nav-item").forEach(btn => btn.onclick = () => setFilter(btn.dataset.filter));
 
-.pill { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
-.p1 { background: var(--accent-soft); color: var(--accent); }
-.p2 { background: var(--sky-soft); color: var(--sky); }
-.cat-academic { background: var(--lilac-soft); color: var(--lilac); }
-.cat-practicals { background: var(--sage-soft); color: var(--sage); }
-.cat-cf { background: var(--accent-soft); color: var(--accent); }
-.cat-python { background: var(--sky-soft); color: var(--sky); }
-.cat-lab { background: var(--sage-soft); color: var(--sage); }
-.cat-aec { background: var(--lilac-soft); color: var(--lilac); }
-.cat-personal { background: var(--butter-soft); color: #b8912f; }
-.trash { color: var(--muted); padding: 4px; border-radius: 8px; opacity: .6; transition: all .2s; margin-left: auto; flex-shrink: 0; }
-.trash:hover { color: var(--danger); opacity: 1; background: var(--surface-2); }
-.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+// ---------- 9. Pomodoro timer ----------
+function drawTimer() {
+  const m = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+  const s = 
+String(timeLeft % 60).padStart(2, "0");
+  $("timer").textContent = `${m}:${s}`;
+  $("timerBar").style.width = ((POMODORO_SECONDS - timeLeft) / POMODORO_SECONDS * 100) + "%";
+  localStorage.setItem("ss_timer", timeLeft);
+}
+$("startBtn").onclick = () 
+=> {
+  if (timerId) return;                      // already running
+  $("timerLabel").textContent = "Focusing… you've got this 💪";
+  timerId = setInterval(() => {
+    timeLeft--;
+    drawTimer();
+    if (timeLeft <= 0) {
+      clearInterval(timerId); timerId = 
+null;
+      timeLeft = POMODORO_SECONDS; drawTimer();
+      $("timerLabel").textContent = "Sprint complete! Take a 5 min break ☕";
+      alert("🎉 Study sprint complete! Time for a short break.");
+    }
+  }, 1000);
+};
+$("pauseBtn").onclick = () => {
+  clearInterval(timerId); timerId = null;
+  $("timerLabel").textContent = "Paused";
+};
+$("resetBtn").onclick = () => {
+  clearInterval(timerId); timerId = null;
+  timeLeft = 
+POMODORO_SECONDS; drawTimer();
+  $("timerLabel").textContent = "Ready to focus";
+};
 
-/* ---------- Right column ---------- */
-.aside { display: flex; flex-direction: column; gap: 20px; }
-.aside h3 { font-size: 1.05rem; margin-bottom: 12px; }
-.timer { font-family: "Fraunces", serif; font-size: 3.4rem; text-align: center; letter-spacing: .02em; margin: 6px 0 4px; }
-.timer-label { text-align: center; color: var(--muted); font-size: .85rem; margin-bottom: 14px; }
-.timer-btns { display: flex; gap: 8px; justify-content: center; }
-.ring-track { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
-.ring-fill { height: 100%; background: var(--accent); width: 0; transition: width 1s linear; }
-.progress-track { height: 10px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
-.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--sage), var(--accent)); border-radius: 99px; transition: width .5s ease; }
-.progress-meta { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); margin-top: 8px; }
-.big-pct { font-family: "Fraunces", serif; font-size: 2rem; }
-.tip { background: var(--sage-soft); border-color: transparent; }
-.tip p { font-size: .92rem; line-height: 1.55; }
-.tip small { display: block; margin-top: 10px; color: var(--muted); }
+// ---------- 10. Light / Dark theme ----------
+function applyTheme(theme) {
+  document.body.classList.toggle("dark", theme === 
+"dark");
+  $("themeToggle").textContent = theme === "dark" ? "☀️ Light mode" : "🌙 Dark mode";
+  localStorage.setItem("ss_theme", theme);
+}
+$("themeToggle").onclick = () => 
+applyTheme(document.body.classList.contains("dark") ? "light" : "dark");
 
-/* ---------- Marks & SGPA ---------- */
-.gpa h2 { font-size: 1.4rem; margin-bottom: 4px; }
-.gpa .sub { color: var(--muted); font-size: .88rem; margin-bottom: 14px; }
-.tbl-wrap { overflow-x: auto; }
-table.marks { width: 100%; border-collapse: collapse; font-size: .88rem; }
-.marks th { text-align: left; color: var(--muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; padding: 8px 6px; border-bottom: 1px solid var(--border); }
-.marks td { padding: 7px 6px; border-bottom: 1px solid var(--border); }
-.marks input { width: 64px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); outline: none; }
-.marks input:focus { border-color: var(--accent); }
-.marks .type { font-size: .7rem; color: var(--muted); }
-.result-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-.result { flex: 1; min-width: 140px; background: var(--surface-2); border-radius: 12px; padding: 14px; }
-.result small { color: var(--muted); display: block; font-size: .78rem; }
-.result b { font-family: "Fraunces", serif; font-size: 1.7rem; }
-.fail { color: var(--danger); font-weight: 700; }
-.grade-scales { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+// ---------- 11. Exam countdown + tips ----------
+function showTip() { $("tipText").textContent = TIPS[tipIndex]; }
+$("nextTip").onclick = () => { tipIndex = (tipIndex + 1) % TIPS.length; showTip(); };
 
-/* ---------- Timetable ---------- */
-table.tt { width: 100%; border-collapse: collapse; font-size: .8rem; table-layout: fixed; min-width: 560px; }
-.ex-done { opacity: .5; text-decoration: line-through; }
-.ex-today td { background: var(--accent-soft); font-weight: 700; }
-.ex-next td { background: var(--butter-soft); }
-.tt th, .tt td { border: 1px solid var(--border); padding: 7px 5px; text-align: center; vertical-align: middle; }
-.tt th { background: var(--surface-2); font-weight: 700; }
-.tt td.time
+
+// ---------- 12. Marks, SGPA & CGPA ----------
+// Sem 1 subjects and marks split (from the class sheet)
+const SUBJECTS = [
+  { type: "Major", name: "Computer Fundamentals", split: "30 T + 25 P + 20 I", max: 75, credits: 2 },
+  { type: "Major", name: "Python Programming",    
+ split: "30 T + 25 P + 20 I", max: 75, credits: 2 },
+  { type: "Major", name: "CF + Python Practical",  split: "50 P",               max: 50, credits: 2 },
+  { type: "VSC",   name: "Web Designing",          split: "50 P",               max: 50, credits: 2 },
+  { type: "SEC",   name: "Linux",                  split: "30 T + 20 I",        max: 50, credits: 2 
+},
+  { type: "IKS",   name: "Vedic Math",             split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "AEC",   name: "Business Communication", split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "VEC",   name: "EVS",                    split: "30 T + 20 I",        max: 50, credits: 2 
+},
+  { type: "OE-1",  name: "Open Elective 1",        split: "30 T + 20 I",        max: 50, credits: 2 },
+  { type: "OE-2",  name: "Open Elective 2",        split: "30 T + 20 I",        max: 50, credits: 2 }
+];
+let marks = JSON.parse(localStorage.getItem("ss_marks")) || {};
+let semRows = 
+JSON.parse(localStorage.getItem("ss_sems")) || [1,2,3,4,5,6].map(n => ({ sgpa: "", credits: n === 1 ? 20 : "" }));
+
+// Subject grade: marks are first scaled to "out of 50"
+function subjectGrade(score, max) {
+  const m = Math.round(score / max * 50);
+  if (m >= 45) return ["O", 
+10];
+  if (m >= 40) return ["A+", 9];
+  if (m >= 35) return ["A", 8];
+  if (m >= 30) return ["B+", 7];
+  if (m >= 25) return ["B", 6];
+  if (m >= 21) return ["C", 5];
+  if (m >= 20) return ["P", 4];
+  return ["F", 0];
+}
+// Overall grade from an SGPA / CGPA
+function pointerGrade(g) {
+  if (g >= 9) return "O"; if (g >= 8) return "A+"; if (g >= 7) return "A";
+  if (g >= 6) return "B+"; if (g >= 5.5) return "B"; if (g >= 5) return "C";
+  if (g >= 4) return "P"; return "F";
+}
+
+function buildMarksTable() {
+  $("marksBody").innerHTML = SUBJECTS.map((s, i) => `
+    <tr><td class="type">${s.type}</td><td>${s.name}</td><td class="type">${s.split}</td><td>${s.credits}</td>
+    <td><input type="number" min="0" 
+max="${s.max}" data-i="${i}" value="${marks[i] ?? ""}" placeholder="/${s.max}"></td>
+    <td id="g${i}">—</td><td id="gp${i}">—</td></tr>`).join("");
+  $("marksBody").querySelectorAll("input").forEach(inp => inp.oninput = () => {
+    const i = inp.dataset.i, max = 
+SUBJECTS[i].max;
+    if (inp.value === "") delete marks[i];
+    else marks[i] = Math.min(max, Math.max(0, Number(inp.value)));
+    localStorage.setItem("ss_marks", JSON.stringify(marks));
+    calcSGPA();
+  });
+
+  $("cgpaBody").innerHTML = semRows.map((r, i) => `
+    <tr><td>Semester ${i + 1}</td>
+    <td><input type="number" step="0.01" min="0" max="10" data-k="sgpa" data-i="${i}" value="${r.sgpa}" ${i === 0 ? "readonly" : ""}></td>
+    <td><input type="number" min="0" 
+data-k="credits" data-i="${i}" value="${r.credits}"></td></tr>`).join("");
+  $("cgpaBody").querySelectorAll("input").forEach(inp => inp.oninput = () => {
+    semRows[inp.dataset.i][inp.dataset.k] = inp.value;
+    localStorage.setItem("ss_sems", 
+JSON.stringify(semRows));
+    calcCGPA();
+  });
+}
+
+// SGPA = sum(credits × grade point) ÷ sum(credits)
+function calcSGPA() {
+  let total = 0, cp = 0, cr = 0, filled = 0, failed = false;
+  SUBJECTS.forEach((s, i) => {
+    if (marks[i] === undefined) { 
+$("g"+i).textContent = "—"; $("gp"+i).textContent = "—"; return; }
+    const [g, gp] = subjectGrade(marks[i], s.max);
+    $("g"+i).innerHTML = g === "F" ? '<span class="fail">F</span>' : g;
+    $("gp"+i).textContent = gp;
+    total += marks[i]; cp += s.credits * gp; cr += s.credits; 
+filled++;
+    if (gp === 0) failed = true;
+  });
+  $("totalMarks").textContent = `${total} / 550`;
+  if (!filled) { $("sgpa").textContent = "—"; $("sgpaGrade").textContent = "—"; semRows[0].sgpa = ""; }
+  else {
+    const sgpa = cp / 
+cr;
+    $("sgpa").textContent = sgpa.toFixed(2) + (filled < SUBJECTS.length ? "*" : "");
+    $("sgpaGrade").innerHTML = failed ? '<span class="fail">ATKT</span>' : pointerGrade(sgpa);
+    semRows[0].sgpa = sgpa.toFixed(2);
+  }
+  const first = 
+$("cgpaBody").querySelector('input[data-i="0"][data-k="sgpa"]');
+  if (first) first.value = semRows[0].sgpa;
+  localStorage.setItem("ss_sems", JSON.stringify(semRows));
+  calcCGPA();
+}
+
+// CGPA = sum(SGPA × semester credits) ÷ 
+sum(semester credits)
+function calcCGPA() {
+  let pts = 0, cr = 0;
+  semRows.forEach(r => { const g = parseFloat(r.sgpa), c = parseFloat(r.credits); if (g >= 0 && c > 0) { pts += g * c; cr += c; } });
+  if (!cr) { $("cgpa").textContent = "—"; $("cgpaGrade").textContent = "—"; return; 
+}
+  const cgpa = pts / cr;
+  $("cgpa").textContent = cgpa.toFixed(2);
+  $("cgpaGrade").textContent = pointerGrade(cgpa);
+}
+
+
+// ---------- 13. Timetable ----------
+// Short codes → subject 
+names
+const SUBJ = {
+  "CF": "Computer Fundamentals", "CF (P)": "CF Practical", "PYTHON": "Python", "PYTHON (P)": "Python Practical",
+  "VEC": "EVS", "IKS": "Vedic Math", "AEC": "Business Comm", "SEC": "Linux", "VSC": "Web Designing",
+  "OE A": "Open Elective A", "OE B": "Open Elective B", "STUD_CONN (CS DEPT)": 
+"Student Connect"
+};
+const SLOTS = [
+  ["10:00", "11:00"], ["11:00", "12:00"], ["12:00", "13:00"], ["13:30", "14:30"],
+  ["14:45", "15:45"], ["15:45", "16:45"], ["16:45", "17:45"]
+];
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// One row per time slot, one entry per day (Mon 
+→ Sat). "" = free.
+const TIMETABLE = [
+  ["", "", "", "", "", "SHC+PRD-STUD_CONN (CS DEPT)"],
+  ["LCT-CF", "", "", "", "", "LCT-CF"],
+  ["PRD-PYTHON", "SFC-OE A", "SFC-OE B", "SFC-OE A", "SFC-OE B", ""],
+  ["DPG-VEC", "SHC-IKS", "ASH-AEC", "DPG-VEC", "PRD-PYTHON", "PRD+SHC-PYTHON (P)"],
+  ["LCT-CF (P)", "RJD-SEC", 
+"RJD+LCT-VSC", "ASH-AEC", "RJD+LCT-VSC", "PRD+SHC-PYTHON (P)"],
+  ["LCT-CF (P)", "RJD-SEC", "RJD+LCT-VSC", "RJD-SEC", "RJD+LCT-VSC", "SHC-IKS"],
+  ["", "", "", "RJD-SEC", "", ""]
+];
+const fmt = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "pm" : "am"; h = h % 12 || 12; return 
+`${h}:${String(m).padStart(2,"0")} ${ap}`; };
+const toMin = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+function splitCell(c) { const i = c.indexOf("-"); return { teacher: c.slice(0, i), code: c.slice(i + 1) }; }
+
+function renderTimetable() {
+  const now = new Date(), 
+dayIdx = now.getDay() - 1, mins = now.getHours() * 60 + now.getMinutes();
+  let html = "<tr><th>Time</th>" + DAYS.map((d, i) => `<th class="${i === dayIdx ? "today" : ""}">${d}</th>`).join("") + "</tr>";
+  SLOTS.forEach(([a, b], r) => {
+    const live = mins >= toMin(a) && mins < 
+toMin(b);
+    html += `<tr><td class="time">${fmt(a)}<br>${fmt(b)}</td>`;
+    TIMETABLE[r].forEach((c, d) => {
+      let cls = d === dayIdx ? "today" : "";
+      if (d === dayIdx && live && c) cls += " now";
+      if (!c) { html += `<td class="${cls}"></td>`; return; 
+}
+      const { teacher, code } = splitCell(c);
+      html += `<td class="${cls}">${SUBJ[code] || code}<small>${teacher}</small></td>`;
+    });
+    html += "</tr>";
+  });
+  $("ttTable").innerHTML = html;
+
+  // Now / Next widget
+  let nowTxt = "No class right now", nextTxt = "No more classes today 🎉", nextLbl = "Next";
+  if (dayIdx >= 0 && dayIdx < 6) {
+    SLOTS.forEach(([a, b], r) => {
+      const c = TIMETABLE[r][dayIdx]; if (!c) return;
+      const name = 
+SUBJ[splitCell(c).code];
+      if (mins >= toMin(a) && mins < toMin(b)) nowTxt = `${name} · till ${fmt(b)}`;
+      else if (toMin(a) > mins && nextLbl === "Next") { nextTxt = name; nextLbl = `Next at ${fmt(a)}`; }
+    });
+  } else { nowTxt = "Sunday — rest day ☀️"; nextTxt = "Mon 11:00 am · Computer Fundamentals"; }
+  
+$("nowClass").textContent = nowTxt; $("nextClass").textContent = nextTxt; $("nextLabel").textContent = nextLbl;
+}
+
+
+// ---------- 15. Term 1 exam timetable + daily reminders ----------
+const EXAMS = [
+  { date: "2026-10-19", 
+subject: "Business Communication Skills I" },
+  { date: "2026-10-21", subject: "Computer Fundamentals" },
+  { date: "2026-10-22", subject: "Environmental Management & Sustainable Development I" },
+  { date: "2026-10-23", subject: "Programming using Python" },
+  { date: "2026-10-24", 
+subject: "Vedic Mathematics" },
+  { date: "2026-10-29", subject: "Open Elective (Group A)" },
+  { date: "2026-10-31", subject: "Open Elective (Group B)" }
+];
+const EXAM_END = 15 * 60 + 15; // exams finish at 3:15 pm
+const dayStart = d => { const x = new Date(d); 
+x.setHours(0,0,0,0); return x; };
+const prettyDate = d => new Date(d + "T00:00").toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" });
+
+// The next exam that hasn't finished yet
+function nextExam() {
+  const now = new Date(), mins = now.getHours() * 
+60 + now.getMinutes(), today = dayStart(now);
+  return EXAMS.find(e => { const d = dayStart(e.date + "T00:00"); return d > today || (+d === +today && mins < EXAM_END); });
+}
+function daysUntil(dateStr) { return Math.round((dayStart(dateStr + "T00:00") - dayStart(new Date())) / 86400000); 
+}
+
+function reminderText() {
+  const e = nextExam();
+  if (!e) return { title: "🎉 Term 1 exams are over!", text: "Great job — time to rest and recharge.", chip: "All done" };
+  const n = daysUntil(e.date);
+  const remaining = EXAMS.length - 
+EXAMS.indexOf(e);
+  const when = n === 0 ? "TODAY at 2:00 pm" : n === 1 ? "TOMORROW at 2:00 pm" : `on ${prettyDate(e.date)}`;
+  return {
+    title: `📝 Next exam: ${e.subject}`,
+    text: `${when} · ${remaining} exam${remaining > 1 ? "s" : ""} left in Term 1`,
+    chip: n === 0 ? "Today! 
+🍀" : `⏳ ${n} day${n > 1 ? "s" : ""} left`
+  };
+}
+
+function renderExams() {
+  const r = reminderText();
+  $("bannerTitle").textContent = r.title; $("bannerText").textContent = r.text; $("countdown").textContent = 
+r.chip;
+  const next = nextExam();
+  $("examTable").innerHTML = "<thead><tr><th>Date</th><th>Subject</th><th>Status</th></tr></thead><tbody>" +
+    EXAMS.map(e => {
+      const n = daysUntil(e.date), isNext = e === next;
+      const done = !isNext 
+&& n <= 0;
+      const status = done ? "✅ Done" : n === 0 ? "Today" : `In ${n} day${n > 1 ? "s" : ""}`;
+      return `<tr class="${done ? "ex-done" : n === 0 ? "ex-today" : isNext ? "ex-next" : ""}"><td>${prettyDate(e.date)}</td><td>${e.subject}</td><td>${status}</td></tr>`;
+    }).join("") + "</tbody>";
+}
+
+// Show a browser notification once per day (if allowed)
+function dailyReminder() {
+  const key = new Date().toDateString();
+  if (localStorage.getItem("ss_reminded") === key) return;
+  const r = reminderText();
+  if ("Notification" in window && 
+Notification.permission === "granted") {
+    new Notification(r.title, { body: r.text });
+    localStorage.setItem("ss_reminded", key);
+  }
+}
+$("notifyBtn").onclick = async () => {
+  if (!("Notification" in window)) return alert("Your browser 
+doesn't support notifications.");
+  const p = await Notification.requestPermission();
+  if (p === "granted") { localStorage.removeItem("ss_reminded"); dailyReminder(); $("notifyBtn").textContent = "✅ Daily reminders on"; }
+};
+if ("Notification" in 
+window && Notification.permission === "granted") $("notifyBtn").textContent = "✅ Daily reminders on";
+
+// ---------- 16. Switching between Tasks and Tools ----------
+function showView(id) {
+  $("tasksView").hidden = !!id;
+  
+6ldocument.querySelectorAll(".view").forEach(v => v.hidden = v.id !== id);
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", id ? b.dataset.view === id : b.dataset.filter === currentFilter));
+}
+document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => 
+showView(b.dataset.view));
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => showView(null)));
+
+// ---------- 17. Start the app ----------
+applyTheme(localStorage.getItem("ss_theme") || "light");
+showTip();
+drawTimer();
+setFilter(currentFilter);
+buildMarksTable();
+calcSGPA();
+renderTimetable();
+setInterval(renderTimetable, 60000);
+renderExams();
+dailyReminder();
+setInterval(() => { renderExams(); dailyReminder(); }, 60000);
+</script>
+</body>
+                                                 </html>
